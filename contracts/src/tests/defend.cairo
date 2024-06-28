@@ -107,7 +107,7 @@ fn test_defend_win() {
 
     // [Assert] Player cards
     let player = store.player(game, player_index);
-    // assert(player.cards > 0, 'Defend: invalid player cards');
+// assert(player.cards > 0, 'Defend: invalid player cards');
 }
 
 #[test]
