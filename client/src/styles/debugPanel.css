@@ -1,0 +1,27 @@
+.side-panel {
+  position: fixed;
+  left: -700px;
+  width: 700px;
+  transition: left 0.3s;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(30px);
+  height: 100vh;
+  z-index: 10;
+  top: 50%; /* positionne le panel au milieu verticalement */
+  transform: translateY(-35%);
+  border-radius: 0 5%;
+  padding: 1em;
+  border-top: 0.5em solid #10172a;
+  border-right: 0.5em solid #10172a;
+  color: white;
+}
+
+.side-panel.open {
+  left: 0;
+  z-index: 10;
+}
+
+.side-panel-element {
+  text-align: right;
+  padding-left: 1em;
+}

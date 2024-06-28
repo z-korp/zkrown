@@ -1,0 +1,60 @@
+kind = "DojoModel"
+class_hash = "0x25fd9102090c577eaeb467e5191c2ab9e357b13fffb1a426615529da8fe3cd3"
+original_class_hash = "0x25fd9102090c577eaeb467e5191c2ab9e357b13fffb1a426615529da8fe3cd3"
+abi = "manifests/dev/abis/base/models/zkrown_models_index_game.json"
+name = "zkrown::models::index::game"
+
+[[members]]
+name = "id"
+type = "u32"
+key = true
+
+[[members]]
+name = "host"
+type = "felt252"
+key = false
+
+[[members]]
+name = "over"
+type = "bool"
+key = false
+
+[[members]]
+name = "seed"
+type = "felt252"
+key = false
+
+[[members]]
+name = "player_count"
+type = "u8"
+key = false
+
+[[members]]
+name = "nonce"
+type = "u32"
+key = false
+
+[[members]]
+name = "price"
+type = "u256"
+key = false
+
+[[members]]
+name = "clock"
+type = "u64"
+key = false
+
+[[members]]
+name = "penalty"
+type = "u64"
+key = false
+
+[[members]]
+name = "limit"
+type = "u32"
+key = false
+
+[[members]]
+name = "config"
+type = "u8"
+key = false

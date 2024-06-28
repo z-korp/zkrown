@@ -1,0 +1,52 @@
+{
+  "continents": [
+    {
+      "id": 1,
+      "name": "Westfury",
+      "regions": [7, 8, 9, 10, 11, 12, 13, 14],
+      "supply": 5
+    },
+    {
+      "id": 2,
+      "name": "Southguard",
+      "regions": [1, 2, 3, 4, 5, 6],
+      "supply": 4
+    },
+    {
+      "id": 3,
+      "name": "Northern Arch",
+      "regions": [15, 16, 17, 18, 19],
+      "supply": 3
+    },
+    {
+      "id": 4,
+      "name": "Seaheart",
+      "regions": [20, 23, 24, 25, 26],
+      "supply": 3
+    },
+    {
+      "id": 5,
+      "name": "Midland",
+      "regions": [21, 27, 28, 29, 30, 31, 32],
+      "supply": 4
+    },
+    {
+      "id": 6,
+      "name": "Giants' Spit",
+      "regions": [33, 34, 35, 36],
+      "supply": 3
+    },
+    {
+      "id": 7,
+      "name": "Dragon's Crest",
+      "regions": [42, 43, 44, 45, 46, 47, 48, 49, 50],
+      "supply": 5
+    },
+    {
+      "id": 8,
+      "name": "Eastern Shores",
+      "regions": [37, 38, 39, 40, 41],
+      "supply": 3
+    }
+  ]
+}

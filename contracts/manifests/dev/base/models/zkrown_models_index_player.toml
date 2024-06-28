@@ -1,0 +1,45 @@
+kind = "DojoModel"
+class_hash = "0x494e893edc83a48638e80f5b3cfc0a58a39e89ddd85f80e16cb0f4073bfae7d"
+original_class_hash = "0x494e893edc83a48638e80f5b3cfc0a58a39e89ddd85f80e16cb0f4073bfae7d"
+abi = "manifests/dev/abis/base/models/zkrown_models_index_player.json"
+name = "zkrown::models::index::player"
+
+[[members]]
+name = "game_id"
+type = "u32"
+key = true
+
+[[members]]
+name = "index"
+type = "u32"
+key = true
+
+[[members]]
+name = "address"
+type = "felt252"
+key = false
+
+[[members]]
+name = "name"
+type = "felt252"
+key = false
+
+[[members]]
+name = "supply"
+type = "u32"
+key = false
+
+[[members]]
+name = "cards"
+type = "u128"
+key = false
+
+[[members]]
+name = "conqueror"
+type = "bool"
+key = false
+
+[[members]]
+name = "rank"
+type = "u8"
+key = false
