@@ -24,7 +24,7 @@ use zkrown::tests::setup::{setup, setup::{Systems, HOST, PLAYER, ANYONE}};
 
 const HOST_NAME: felt252 = 'HOST';
 const PLAYER_NAME: felt252 = 'PLAYER';
-const PRICE: u256 = 1_000_000_000_000_000_000;
+const PRICE: felt252 = 1_000_000_000_000_000_000;
 const PENALTY: u64 = 60;
 const PLAYER_COUNT: u8 = 2;
 const PLAYER_INDEX: u32 = 0;
@@ -96,7 +96,7 @@ fn test_defend_win() {
 
     // [Assert] Defender tile
     let game: Game = store.game(game_id);
-    let tile: Tile = store.tile(game, defender.into());
+    let _tile: Tile = store.tile(game, defender.into());
     // assert(tile.owner == player_index.into(), 'Defend: invalid owner');
 
     // [Finish]
@@ -106,7 +106,7 @@ fn test_defend_win() {
     systems.play.finish(game_id);
 
     // [Assert] Player cards
-    let player = store.player(game, player_index);
+    let _player = store.player(game, player_index);
 // assert(player.cards > 0, 'Defend: invalid player cards');
 }
 

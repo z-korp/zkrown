@@ -25,7 +25,7 @@ use zkrown::tests::setup::{setup, setup::{Systems, HOST, PLAYER, ANYONE}};
 const HOST_NAME: felt252 = 'HOST';
 const PLAYER_NAME: felt252 = 'PLAYER';
 const ANYONE_NAME: felt252 = 'ANYONE';
-const PRICE: u256 = 1_000_000_000_000_000_000;
+const PRICE: felt252 = 1_000_000_000_000_000_000;
 const PENALTY: u64 = 60;
 const PLAYER_COUNT: u8 = 2;
 const ROUND_COUNT: u32 = 10;
@@ -178,7 +178,7 @@ fn test_host_create_and_tranfer_and_kick_host() {
 #[should_panic(expected: ('Game: has started', 'ENTRYPOINT_FAILED',))]
 fn test_host_start_then_join_revert_started() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (_, systems, _) = setup::spawn_game();
 
     // [Create]
     let game_id = systems.host.create(HOST_NAME, PRICE, PENALTY);
@@ -197,7 +197,7 @@ fn test_host_start_then_join_revert_started() {
 #[should_panic(expected: ('Game: has started', 'ENTRYPOINT_FAILED',))]
 fn test_host_start_then_leave_revert_started() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (_, systems, _) = setup::spawn_game();
 
     // [Create]
     let game_id = systems.host.create(HOST_NAME, PRICE, PENALTY);

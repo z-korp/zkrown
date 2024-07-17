@@ -24,7 +24,7 @@ use zkrown::tests::setup::{setup, setup::{Systems, HOST, PLAYER, ANYONE}};
 const HOST_NAME: felt252 = 'HOST';
 const PLAYER_NAME: felt252 = 'PLAYER';
 const ANYONE_NAME: felt252 = 'ANYONE';
-const PRICE: u256 = 1_000_000_000_000_000_000;
+const PRICE: felt252 = 1_000_000_000_000_000_000;
 const PENALTY: u64 = 60;
 const PLAYER_COUNT: u8 = 2;
 const PLAYER_INDEX: u32 = 0;
