@@ -10,7 +10,7 @@ export interface Signer {
 
 export interface Create extends Signer {
   name: string;
-  price: bigint;
+  price: BigInt;
   penalty: number;
 }
 

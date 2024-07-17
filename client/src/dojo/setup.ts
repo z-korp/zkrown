@@ -1,15 +1,14 @@
 import { getSyncEntities } from "@dojoengine/state";
-import { DojoProvider } from "@dojoengine/core";
 import * as torii from "@dojoengine/torii-client";
-import { createClientComponents } from "./createClientComponents";
-import { defineContractComponents } from "./generated/contractComponents";
-import { setupWorld } from "./generated/contractSystems.ts";
 import { systems } from "./systems.ts";
-import { world } from "./world";
+import { defineContractComponents } from "./generated/contractModels.ts";
+import { world } from "./world.ts";
 import { Config } from "../../dojo.config.ts";
-import { Account, RpcProvider } from "starknet";
+import { setupWorld } from "./generated/contractSystems.ts";
+import { DojoProvider } from "@dojoengine/core";
 import { BurnerManager } from "@dojoengine/create-burner";
-import { createUpdates } from "./createUpdates";
+import { Account, RpcProvider } from "starknet";
+import { models } from "./models.ts";
 
 export type SetupResult = Awaited<ReturnType<typeof setup>>;
 
@@ -23,19 +22,18 @@ export async function setup({ ...config }: Config) {
   });
 
   // create contract components
-  const contractComponents = defineContractComponents(world);
+  const contractModels = defineContractComponents(world);
 
   // create client components
-  const clientComponents = createClientComponents({ contractComponents });
-
-  // create updates manager
-  const updates = await createUpdates(clientComponents);
+  const clientModels = models({ contractModels });
 
   // fetch all existing entities from torii
+  // await getSyncEntities(toriiClient, contractModels as any, []);
   const sync = await getSyncEntities(
     toriiClient,
-    contractComponents as any,
-    []
+    contractModels as any,
+    [],
+    1000
   );
 
   const client = await setupWorld(
@@ -70,11 +68,10 @@ export async function setup({ ...config }: Config) {
 
   return {
     client,
-    clientComponents,
-    contractComponents,
-    systemCalls: systems({ client, clientComponents }),
+    clientModels,
+    contractComponents: clientModels,
+    systemCalls: systems({ client, clientModels }),
     config,
-    updates,
     world,
     burnerManager,
     rpcProvider,

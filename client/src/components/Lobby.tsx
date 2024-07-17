@@ -168,7 +168,7 @@ const Lobby: React.FC = () => {
           </Button>
 
           <div className="absolute left-1/2 transform -translate-x-1/2 w-96 rounded-lg uppercase text-white text-4xl bg-stone-500 text-center">
-            zConqueror
+            zKrown
           </div>
           <div className="absolute right-0">
             <WalletButton />

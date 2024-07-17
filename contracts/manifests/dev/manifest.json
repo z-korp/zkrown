@@ -1020,8 +1020,8 @@
     {
       "kind": "DojoContract",
       "address": "0x234aeae53ad6c0d591e80a012962bce352b9b46c189512829f02ddfeda751b8",
-      "class_hash": "0x5d0b65b7d2524f498f0bbeb6635947856644695e6e774abbb6a50784f468c2b",
-      "original_class_hash": "0x5d0b65b7d2524f498f0bbeb6635947856644695e6e774abbb6a50784f468c2b",
+      "class_hash": "0x884a0247c016fa3a667383e86beb8b6f6533ba8e8cca9a84d1e710a6e6fd01",
+      "original_class_hash": "0x884a0247c016fa3a667383e86beb8b6f6533ba8e8cca9a84d1e710a6e6fd01",
       "base_class_hash": "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46",
       "abi": [
         {
@@ -1107,20 +1107,6 @@
           "interface_name": "zkrown::systems::play::IHost"
         },
         {
-          "type": "struct",
-          "name": "core::integer::u256",
-          "members": [
-            {
-              "name": "low",
-              "type": "core::integer::u128"
-            },
-            {
-              "name": "high",
-              "type": "core::integer::u128"
-            }
-          ]
-        },
-        {
           "type": "interface",
           "name": "zkrown::systems::play::IHost",
           "items": [
@@ -1134,7 +1120,7 @@
                 },
                 {
                   "name": "price",
-                  "type": "core::integer::u256"
+                  "type": "core::felt252"
                 },
                 {
                   "name": "penalty",

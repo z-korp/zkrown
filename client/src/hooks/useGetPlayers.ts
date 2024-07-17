@@ -9,7 +9,9 @@ import { useEffect, useMemo, useState } from "react";
 export function useGetPlayers(): { players: Player[]; playerNames: string[] } {
   const {
     setup: {
-      clientComponents: { Player },
+      clientModels: {
+        models: { Player },
+      },
     },
   } = useDojo();
 
