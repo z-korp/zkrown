@@ -10,7 +10,9 @@ use dojo::world::IWorldDispatcher;
 
 #[dojo::interface]
 trait IHost {
-    fn create(ref world: IWorldDispatcher, player_name: felt252, price: u256, penalty: u64) -> u32;
+    fn create(
+        ref world: IWorldDispatcher, player_name: felt252, price: felt252, penalty: u64
+    ) -> u32;
     fn join(ref world: IWorldDispatcher, game_id: u32, player_name: felt252);
     fn leave(ref world: IWorldDispatcher, game_id: u32);
     fn delete(ref world: IWorldDispatcher, game_id: u32);
@@ -113,13 +115,13 @@ mod play {
     #[abi(embed_v0)]
     impl Host of IHost<ContractState> {
         fn create(
-            ref world: IWorldDispatcher, player_name: felt252, price: u256, penalty: u64
+            ref world: IWorldDispatcher, player_name: felt252, price: felt252, penalty: u64
         ) -> u32 {
             // [Interaction] Pay
             let caller = get_caller_address();
-            self.payable.pay(caller, price);
+            self.payable.pay(caller, price.into());
             // [Effect] Create game
-            self.hostable.create(world, player_name, price, penalty, Config::Test)
+            self.hostable.create(world, player_name, price.into(), penalty, Config::Test)
         }
 
         fn join(ref world: IWorldDispatcher, game_id: u32, player_name: felt252) {
