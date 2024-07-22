@@ -17,7 +17,7 @@ type PlayersPanelProps = {
 const PlayersPanel = ({ players }: PlayersPanelProps) => {
   const {
     setup: {
-      client: { play },
+      systemCalls: { banish },
     },
     account: { account },
   } = useDojo();
@@ -38,7 +38,7 @@ const PlayersPanel = ({ players }: PlayersPanelProps) => {
   const { currentPlayer } = useGetCurrentPlayer();
 
   const banPlayer = async () => {
-    await play.banish(account, game.id);
+    await banish({ account, gameId: game.id });
   };
 
   useEffect(() => {

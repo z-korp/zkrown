@@ -25,7 +25,7 @@ import Loading from "./Loading";
 const Lobby: React.FC = () => {
   const {
     setup: {
-      client: { host },
+      systemCalls: { start, remove, leave, kick, promote },
     },
     account: { account },
   } = useDojo();
@@ -77,7 +77,7 @@ const Lobby: React.FC = () => {
     }
     try {
       setStartLoading(true);
-      await host.start(account, game_id, round_limit);
+      await start({ account, gameId: game_id, roundLimit: round_limit });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -94,9 +94,9 @@ const Lobby: React.FC = () => {
     try {
       setLeaveLoading(true);
       if (isHost(game.host, account.address)) {
-        await host.delete_game(account, game.id);
+        await remove({ account, gameId: game.id });
       } else {
-        await host.leave(account, game_id);
+        await leave({ account, gameId: game_id });
       }
 
       set_game_id(0);
@@ -116,7 +116,7 @@ const Lobby: React.FC = () => {
   const kickPlayer = async (player_index: number, game_id: number) => {
     try {
       setKickLoading(true);
-      await host.kick(account, game_id, player_index);
+      await kick({ account, gameId: game_id, playerIndex: player_index });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -132,7 +132,7 @@ const Lobby: React.FC = () => {
   const transferHost = async (player_index: number, game_id: number) => {
     try {
       setTransferLoading(true);
-      await host.transfer(account, game_id, player_index);
+      await promote({ account, gameId: game_id, playerIndex: player_index });
     } catch (error: any) {
       toast({
         variant: "destructive",

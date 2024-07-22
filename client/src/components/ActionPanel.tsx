@@ -25,7 +25,7 @@ const ovIdTarget = uuid();
 const ActionPanel = () => {
   const {
     setup: {
-      client: { play },
+      systemCalls: { supply, attack, defend, transfer },
       clientModels: {
         models: { Tile },
       },
@@ -145,7 +145,12 @@ const ActionPanel = () => {
     setIsBtnActionDisabled(true);
 
     try {
-      await play.supply(account, game_id, current_source, armySelected);
+      await supply({
+        account,
+        gameId: game_id,
+        tileIndex: current_source,
+        supply: armySelected,
+      });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -179,23 +184,23 @@ const ActionPanel = () => {
     setIsBtnActionDisabled(true);
 
     try {
-      await play.attack(
+      await attack({
         account,
-        game_id,
-        current_source,
-        current_target,
-        armySelected,
-      );
+        gameId: game_id,
+        attackerIndex: current_source,
+        defenderIndex: current_target,
+        dispacted: armySelected,
+      });
 
       await sleep(2000);
 
       const tryDefend = async () => {
-        const ret = await play.defend(
+        const ret = await defend({
           account,
-          game_id,
-          current_source,
-          current_target,
-        );
+          gameId: game_id,
+          attackerIndex: current_source,
+          defenderIndex: current_target,
+        });
         const battleEvents: BattleEvent[] = ret.events
           .filter((e) => e.keys[0] === BATTLE_EVENT)
           .map((event) => parseBattleEvent(event));
@@ -210,7 +215,7 @@ const ActionPanel = () => {
         await tryDefend();
       } catch (defendError: any) {
         console.log(
-          `First defend attempt failed with error: ${defendError.message}`,
+          `First defend attempt failed with error: ${defendError.message}`
         );
 
         try {
@@ -218,7 +223,7 @@ const ActionPanel = () => {
         } catch (secondDefendError: any) {
           console.log(`Defend failed on retry: ${secondDefendError.message}`);
           throw new Error(
-            `Defend failed on retry: ${secondDefendError.message}`,
+            `Defend failed on retry: ${secondDefendError.message}`
           );
         }
       }
@@ -248,13 +253,13 @@ const ActionPanel = () => {
     setIsBtnActionDisabled(true);
 
     try {
-      await play.transfer(
+      await transfer({
         account,
-        game_id,
-        current_source,
-        current_target,
-        armySelected,
-      );
+        gameId: game_id,
+        sourceIndex: current_source,
+        targetIndex: current_target,
+        army: armySelected,
+      });
     } catch (error: any) {
       toast({
         variant: "destructive",

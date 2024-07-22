@@ -21,7 +21,7 @@ const StatusPlayer: React.FC<StatusPlayerProps> = ({
 }) => {
   const {
     setup: {
-      client: { play },
+      systemCalls: { emote },
     },
     account: { account },
   } = useDojo();
@@ -35,9 +35,14 @@ const StatusPlayer: React.FC<StatusPlayerProps> = ({
 
   const image = avatars[player.index + 1];
 
-  const handleEmoteSelect = (emote: number) => {
+  const handleEmoteSelect = (emoteId: number) => {
     if (game_id == null || game_id == undefined) return;
-    play.emote(account, game_id, player.index, emote);
+    emote({
+      account,
+      gameId: game_id,
+      playerIndex: player.index,
+      emote: emoteId,
+    });
   };
 
   return (

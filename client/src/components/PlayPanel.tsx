@@ -22,7 +22,7 @@ import { useAudioSettings } from "@/contexts/AudioContext";
 const PlayPanel = () => {
   const {
     setup: {
-      client: { play },
+      systemCalls: { finish },
     },
     account: { account },
   } = useDojo();
@@ -143,7 +143,7 @@ const PlayPanel = () => {
         return;
       }
       try {
-        await play.finish(account, game.id);
+        await finish({ account, gameId: game.id });
       } catch (error: any) {
         toast({
           variant: "destructive",
@@ -156,7 +156,7 @@ const PlayPanel = () => {
       }
     } else {
       try {
-        await play.finish(account, game.id);
+        await finish({ account, gameId: game.id });
       } catch (error: any) {
         toast({
           variant: "destructive",
