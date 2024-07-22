@@ -26,7 +26,9 @@ const ActionPanel = () => {
   const {
     setup: {
       client: { play },
-      clientComponents: { Tile },
+      clientModels: {
+        models: { Tile },
+      },
     },
     account: { account },
   } = useDojo();
@@ -182,7 +184,7 @@ const ActionPanel = () => {
         game_id,
         current_source,
         current_target,
-        armySelected
+        armySelected,
       );
 
       await sleep(2000);
@@ -192,7 +194,7 @@ const ActionPanel = () => {
           account,
           game_id,
           current_source,
-          current_target
+          current_target,
         );
         const battleEvents: BattleEvent[] = ret.events
           .filter((e) => e.keys[0] === BATTLE_EVENT)
@@ -208,7 +210,7 @@ const ActionPanel = () => {
         await tryDefend();
       } catch (defendError: any) {
         console.log(
-          `First defend attempt failed with error: ${defendError.message}`
+          `First defend attempt failed with error: ${defendError.message}`,
         );
 
         try {
@@ -216,7 +218,7 @@ const ActionPanel = () => {
         } catch (secondDefendError: any) {
           console.log(`Defend failed on retry: ${secondDefendError.message}`);
           throw new Error(
-            `Defend failed on retry: ${secondDefendError.message}`
+            `Defend failed on retry: ${secondDefendError.message}`,
           );
         }
       }
@@ -251,7 +253,7 @@ const ActionPanel = () => {
         game_id,
         current_source,
         current_target,
-        armySelected
+        armySelected,
       );
     } catch (error: any) {
       toast({

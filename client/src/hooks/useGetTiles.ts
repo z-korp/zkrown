@@ -9,7 +9,9 @@ export function useGetTiles() {
   const { turn } = useTurn();
   const {
     setup: {
-      clientComponents: { Tile },
+      clientModels: {
+        models: { Tile },
+      },
     },
   } = useDojo();
 
@@ -35,7 +37,7 @@ export function useGetTiles() {
   const tiles = useMemo(() => tilesData.map((t) => t.tile), [tilesData]);
   const tilesEntities = useMemo(
     () => tilesData.map((t) => t.entityId),
-    [tilesData]
+    [tilesData],
   );
 
   return {

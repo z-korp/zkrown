@@ -24,18 +24,20 @@ const GameRow: React.FC<GameRowProps> = ({ game, setPlayerName }) => {
   const {
     setup: {
       client: { host },
-      clientComponents: { Player },
+      clientModels: {
+        models: { Player },
+      },
     },
     account: { account },
   } = useDojo();
 
   const { set_game_state, set_game_id, player_name } = useElementStore(
-    (state) => state
+    (state) => state,
   );
 
   const playerId = useEntityQuery(
     [HasValue(Player, { game_id: game.id, index: 0 })],
-    { updateOnValueChange: true }
+    { updateOnValueChange: true },
   );
   const player = useComponentValue(Player, playerId[0]);
   const { players } = useGetPlayersForGame(game.id);
@@ -51,7 +53,7 @@ const GameRow: React.FC<GameRowProps> = ({ game, setPlayerName }) => {
       return;
     }
     try {
-      await host.join(account, gameid, player_name);
+      await join(account, gameid, player_name);
       set_game_id(gameid);
       set_game_state(GameState.Lobby);
     } catch (error: any) {

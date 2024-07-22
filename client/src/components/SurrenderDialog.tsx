@@ -24,7 +24,7 @@ const SurrenderDialog = () => {
   const { game_id } = useElementStore((state) => state);
 
   const surrender = async () => {
-    if (game_id) await play.surrender(account, game_id);
+    if (game_id) await play.surrender({ account, gameId: game_id });
   };
 
   return (
