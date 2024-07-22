@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -67,6 +68,7 @@ export function DialogCreateJoin({
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-white">{dialogTitle}</DialogTitle>
+          <DialogDescription></DialogDescription>
         </DialogHeader>
         <div className="flex items-center">
           <div className="grid flex-1">

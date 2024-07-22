@@ -35,7 +35,7 @@ export function systems({
         `Game has been created.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error: any) {
       console.error(extractedMessage(error.message));
@@ -53,7 +53,7 @@ export function systems({
         `Game has been joined.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error) {
       console.error("Error joining game:", error);
@@ -71,7 +71,7 @@ export function systems({
         `Host role has been promoted.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error) {
       console.error("Error transferring ownership:", error);
@@ -89,7 +89,7 @@ export function systems({
         `Game has been left.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error) {
       console.error("Error leaving game:", error);
@@ -107,7 +107,7 @@ export function systems({
         `Player has been kicked.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error) {
       console.error("Error kicking player:", error);
@@ -125,7 +125,7 @@ export function systems({
         `Game has been deleted.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error) {
       console.error("Error deleting game:", error);
@@ -143,7 +143,7 @@ export function systems({
         `Game has started.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error) {
       console.error("Error starting game:", error);
@@ -161,7 +161,7 @@ export function systems({
         `Game has been claimed.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error) {
       console.error("Error claiming game:", error);
@@ -179,7 +179,7 @@ export function systems({
         `Player has surrendered.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error: any) {
       console.error(extractedMessage(error.message));
@@ -197,7 +197,7 @@ export function systems({
         `Player has been banished.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error: any) {
       console.error(extractedMessage(error.message));
@@ -215,7 +215,7 @@ export function systems({
         `Player has attacked.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error: any) {
       console.error(extractedMessage(error.message));
@@ -233,7 +233,7 @@ export function systems({
         `Player has defended.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error: any) {
       console.error(extractedMessage(error.message));
@@ -251,7 +251,7 @@ export function systems({
         `Player has discarded.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error: any) {
       console.error(extractedMessage(error.message));
@@ -269,7 +269,7 @@ export function systems({
         `Game has finished.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error: any) {
       console.error(extractedMessage(error.message));
@@ -287,7 +287,7 @@ export function systems({
         `Player has transferred.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error: any) {
       console.error(extractedMessage(error.message));
@@ -305,7 +305,7 @@ export function systems({
         `Player has supplied.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error: any) {
       console.error(extractedMessage(error.message));
@@ -323,7 +323,7 @@ export function systems({
         `Player has emoted.`,
         await account.waitForTransaction(transaction_hash, {
           retryInterval: 100,
-        })
+        }),
       );
     } catch (error: any) {
       console.error(extractedMessage(error.message));

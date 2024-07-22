@@ -10,7 +10,7 @@ export interface Signer {
 
 export interface Create extends Signer {
   name: string;
-  price: BigInt;
+  price: bigint;
   penalty: number;
 }
 
@@ -101,7 +101,7 @@ export type IWorld = Awaited<ReturnType<typeof setupWorld>>;
 
 export const getContractByName = (manifest: any, name: string) => {
   const contract = manifest.contracts.find((contract: any) =>
-    contract.name.includes("::" + name)
+    contract.name.includes("::" + name),
   );
   if (contract) {
     return contract.address;
@@ -116,7 +116,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
   function play() {
     const contract_name = "play";
     const contract = config.manifest.contracts.find((c: any) =>
-      c.name.includes(contract_name)
+      c.name.includes(contract_name),
     );
     if (!contract) {
       throw new Error(`Contract ${contract_name} not found in manifest`);
@@ -130,14 +130,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "create",
-            calldata: [
-              provider.getWorldAddress(),
-              encoded_name,
-              price,
-              penalty,
-            ],
+            calldata: [encoded_name, price, penalty],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing create:", error);
@@ -153,9 +148,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "join",
-            calldata: [provider.getWorldAddress(), gameId, encoded_name],
+            calldata: [gameId, encoded_name],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing join:", error);
@@ -170,9 +165,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "leave",
-            calldata: [provider.getWorldAddress(), gameId],
+            calldata: [gameId],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing leave:", error);
@@ -187,9 +182,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "start",
-            calldata: [provider.getWorldAddress(), gameId, roundLimit],
+            calldata: [gameId, roundLimit],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing start:", error);
@@ -204,9 +199,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "kick",
-            calldata: [provider.getWorldAddress(), gameId, playerIndex],
+            calldata: [gameId, playerIndex],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing kick:", error);
@@ -221,9 +216,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "promote",
-            calldata: [provider.getWorldAddress(), gameId, playerIndex],
+            calldata: [gameId, playerIndex],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing promote:", error);
@@ -238,9 +233,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "remove",
-            calldata: [provider.getWorldAddress(), gameId],
+            calldata: [gameId],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing remove:", error);
@@ -255,9 +250,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "claim",
-            calldata: [provider.getWorldAddress(), gameId],
+            calldata: [gameId],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing claim:", error);
@@ -272,9 +267,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "surrender",
-            calldata: [provider.getWorldAddress(), gameId],
+            calldata: [gameId],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing surrender:", error);
@@ -289,9 +284,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "banish",
-            calldata: [provider.getWorldAddress(), gameId],
+            calldata: [gameId],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing banish:", error);
@@ -312,15 +307,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "attack",
-            calldata: [
-              provider.getWorldAddress(),
-              gameId,
-              attackerIndex,
-              defenderIndex,
-              dispacted,
-            ],
+            calldata: [gameId, attackerIndex, defenderIndex, dispacted],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing attack:", error);
@@ -340,14 +329,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "defend",
-            calldata: [
-              provider.getWorldAddress(),
-              gameId,
-              attackerIndex,
-              defenderIndex,
-            ],
+            calldata: [gameId, attackerIndex, defenderIndex],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing defend:", error);
@@ -368,15 +352,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "discard",
-            calldata: [
-              provider.getWorldAddress(),
-              gameId,
-              cardOne,
-              cardTwo,
-              cardThree,
-            ],
+            calldata: [gameId, cardOne, cardTwo, cardThree],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing discard:", error);
@@ -391,9 +369,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "finish",
-            calldata: [provider.getWorldAddress(), gameId],
+            calldata: [gameId],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing finish:", error);
@@ -414,15 +392,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "transfer",
-            calldata: [
-              provider.getWorldAddress(),
-              gameId,
-              sourceIndex,
-              targetIndex,
-              army,
-            ],
+            calldata: [gameId, sourceIndex, targetIndex, army],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing transfer:", error);
@@ -437,9 +409,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "supply",
-            calldata: [provider.getWorldAddress(), gameId, tileIndex, supply],
+            calldata: [gameId, tileIndex, supply],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing supply:", error);
@@ -454,9 +426,9 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "emote",
-            calldata: [provider.getWorldAddress(), gameId, playerIndex, emote],
+            calldata: [gameId, playerIndex, emote],
           },
-          details
+          details,
         );
       } catch (error) {
         console.error("Error executing emote:", error);
