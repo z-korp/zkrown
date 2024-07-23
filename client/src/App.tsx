@@ -41,6 +41,7 @@ function App() {
   const { players } = useGetPlayers();
   const { me } = useMe();
 
+  console.log("gameState", game_state);
   return (
     <>
       <TutorialProvider>

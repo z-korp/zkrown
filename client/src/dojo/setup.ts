@@ -9,6 +9,7 @@ import { DojoProvider } from "@dojoengine/core";
 import { BurnerManager } from "@dojoengine/create-burner";
 import { Account, RpcProvider } from "starknet";
 import { models } from "./models.ts";
+import { createUpdates } from "./createUpdates";
 
 export type SetupResult = Awaited<ReturnType<typeof setup>>;
 
@@ -26,6 +27,9 @@ export async function setup({ ...config }: Config) {
 
   // create client components
   const clientModels = models({ contractModels });
+
+  // create updates manager
+  const updates = await createUpdates(clientModels);
 
   // fetch all existing entities from torii
   // await getSyncEntities(toriiClient, contractModels as any, []);
@@ -70,7 +74,8 @@ export async function setup({ ...config }: Config) {
     client,
     clientModels,
     contractComponents: clientModels,
-    systemCalls: systems({ client, clientModels }),
+    updates,
+    systemCalls: systems({ client, clientComponents: clientModels }),
     config,
     world,
     burnerManager,
