@@ -239,7 +239,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           account,
           {
             contractName: contract_name,
-            entrypoint: "remove",
+            entrypoint: "delete", // delete is not allowed as variable in ts
             calldata: [gameId],
           },
           details,

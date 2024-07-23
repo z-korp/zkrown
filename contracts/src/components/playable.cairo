@@ -69,10 +69,10 @@ mod PlayableComponent {
         const PLAYABLE_INVALID_SEED: felt252 = 'Playable:: invalid seed';
     }
 
-    // Storage
-
     #[storage]
-    struct Storage {}
+    struct Storage {
+        seeds: LegacyMap::<felt252, bool>,
+    }
 
     // Events
 
@@ -196,74 +196,6 @@ mod PlayableComponent {
                 };
             };
         }
-
-        /*fn defend(
-            self: @ComponentState<TContractState>,
-            world: IWorldDispatcher,
-            game_id: u32,
-            attacker_index: u8,
-            defender_index: u8
-        ) {
-            // [Setup] Datastore
-            let mut store: Store = StoreTrait::new(world);
-
-            // [Check] Turn
-            let mut game: Game = store.game(game_id);
-            assert(game.turn() == Turn::Attack, errors::DEFEND_INVALID_TURN);
-
-            // [Check] Caller is player
-            let caller = get_caller_address();
-            let mut player = store.current_player(game);
-            assert(player.address == caller.into(), errors::DEFEND_INVALID_PLAYER);
-
-            // [Check] Tiles owner
-            let mut attacker = store.tile(game, attacker_index);
-            let attacker_troops = attacker.dispatched;
-            let mut defender = store.tile(game, defender_index);
-            let defender_troops = defender.army;
-            assert(attacker.owner == player.index.into(), errors::DEFEND_INVALID_OWNER);
-
-            // [Compute] Defend
-            let defender_player = store.player(game, defender.owner.try_into().unwrap());
-            let order = get_tx_info().unbox().transaction_hash;
-            let mut battles: Array<Battle> = array![];
-            let status = defender
-                .defend(ref attacker, game.seed, order, ref battles, game.config.into());
-            player.conqueror = player.conqueror || status;
-
-            // [Effect] Update tiles
-            store.set_tiles(array![attacker, defender].span());
-
-            // [Effect] Update player
-            store.set_player(player);
-
-            // [Event] Defend
-            let event = Defend {
-                game_id: game_id,
-                attacker_index: player.index,
-                defender_index: defender_player.index,
-                target_tile: defender_index,
-                result: status,
-            };
-            self.get_contract().emit_defend(world, event);
-
-            // [Event] Battles
-            loop {
-                match battles.pop_front() {
-                    Option::Some(battle) => {
-                        let mut battle = battle;
-                        battle.game_id = game_id;
-                        battle.attacker_index = player.index;
-                        battle.defender_index = defender_player.index;
-                        battle.attacker_troops = attacker_troops;
-                        battle.defender_troops = defender_troops;
-                        battle.tx_hash = get_tx_info().unbox().transaction_hash;
-                        self.get_contract().emit_battle(world, battle);
-                    },
-                    Option::None => { break; },
-                };
-            };
-        }*/
 
         fn discard(
             self: @ComponentState<TContractState>,

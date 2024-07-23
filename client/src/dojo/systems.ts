@@ -60,7 +60,7 @@ export function systems({
     }
   };
 
-  const promote = async ({ account, ...props }: SystemTypes.Promote) => {
+  const grant = async ({ account, ...props }: SystemTypes.Promote) => {
     try {
       const { transaction_hash } = await client.play.promote({
         account,
@@ -331,22 +331,21 @@ export function systems({
   };
 
   return {
-    create,
-    join,
-    leave,
-    start,
-    kick,
-    promote,
+    create, //
+    join, //
+    leave, //
+    start, //
+    kick, //
+    grant, // grant?
     remove,
-    claim,
-    surrender,
-    banish,
-    attack,
-    defend,
-    discard,
-    finish,
-    transfer,
-    supply,
-    emote,
+    claim, //
+    surrender, //
+    banish, //
+    attack, //
+    discard, //
+    finish, //
+    transfer, //
+    supply, //
+    emote, //
   };
 }

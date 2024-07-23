@@ -22,8 +22,8 @@ name = "dojo::base::base"
 [[contracts]]
 kind = "DojoContract"
 address = "0x234aeae53ad6c0d591e80a012962bce352b9b46c189512829f02ddfeda751b8"
-class_hash = "0x884a0247c016fa3a667383e86beb8b6f6533ba8e8cca9a84d1e710a6e6fd01"
-original_class_hash = "0x884a0247c016fa3a667383e86beb8b6f6533ba8e8cca9a84d1e710a6e6fd01"
+class_hash = "0x498ac6f20841222e5ed6c741518e2583ae59eb7745c0ce3fcaaea087670aba8"
+original_class_hash = "0x498ac6f20841222e5ed6c741518e2583ae59eb7745c0ce3fcaaea087670aba8"
 base_class_hash = "0x22f3e55b61d86c2ac5239fa3b3b8761f26b9a5c0b5f61ddbd5d756ced498b46"
 abi = "manifests/dev/abis/deployments/contracts/zkrown_systems_play_play.json"
 reads = []

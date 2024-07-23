@@ -77,7 +77,6 @@ impl TileImpl of TileTrait {
         self.army -= dispatched;
         self.dispatched = dispatched;
         self.to = defender.id;
-        self.order = order;
         // [Effect] Update defender
         defender.from = self.id;
     }

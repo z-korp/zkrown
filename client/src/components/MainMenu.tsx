@@ -33,17 +33,13 @@ const MainMenu: React.FC = () => {
 
   const game = useComponentValue(
     Game,
-    useEntityQuery([HasValue(Game, { host: account.address })])[0],
+    useEntityQuery([HasValue(Game, { host: BigInt(account.address) })])[0],
   );
   const player = useComponentValue(
     Player,
-    useEntityQuery([HasValue(Player, { address: account.address })])[0],
+    useEntityQuery([HasValue(Player, { address: BigInt(account.address) })])[0],
   );
 
-  // console.log(
-  //   "useEntityQuery([HasValue(Game, { host: BigInt(account.address) })])"
-  // );
-  console.log(useEntityQuery([HasValue(Game, { host: account.address })]));
   const [hours, setHours] = useState<number | null>(null);
   const [minutes, setMinutes] = useState(5);
   // if player is host of a game, go to the lobby
@@ -97,10 +93,6 @@ const MainMenu: React.FC = () => {
         .filter((game: any) => game.host !== 0n),
     [gameEntities, Game],
   );
-
-  console.log("host", games[0].host);
-  console.log("host", typeof games[0].host);
-  console.log("address", BigInt(account.address));
 
   if (!games) return null;
   return (

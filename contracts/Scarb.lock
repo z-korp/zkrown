@@ -29,9 +29,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "stark_vrf"
+version = "0.1.0"
+source = "git+https://github.com/dojoengine/stark-vrf?rev=5a9e81e#5a9e81ea24e7081fa5c5be9e072fbc24f9897201"
+
+[[package]]
 name = "zkrown"
 version = "0.0.0"
 dependencies = [
  "dojo",
  "origami",
+ "stark_vrf",
 ]

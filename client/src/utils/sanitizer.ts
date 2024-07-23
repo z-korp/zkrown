@@ -1,4 +1,3 @@
-import { validateAndParseAddress } from "starknet";
 import { feltToStr, unpackU128toNumberArray } from "./unpack";
 import { Player } from "./types";
 
@@ -20,7 +19,9 @@ export const sanitizePlayer = (player: any): Player => {
 };
 
 export const bigIntAddressToString = (address: bigint) => {
-  return removeLeadingZeros(validateAndParseAddress(address));
+  return removeLeadingZeros(
+    "0x" + address.toString(16) /*validateAndParseAddress(address)*/,
+  );
 };
 
 export const shortAddress = (address: string, size = 4) => {
