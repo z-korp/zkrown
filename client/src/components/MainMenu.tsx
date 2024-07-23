@@ -33,11 +33,11 @@ const MainMenu: React.FC = () => {
 
   const game = useComponentValue(
     Game,
-    useEntityQuery([HasValue(Game, { host: account.address })])[0]
+    useEntityQuery([HasValue(Game, { host: account.address })])[0],
   );
   const player = useComponentValue(
     Player,
-    useEntityQuery([HasValue(Player, { address: BigInt(account.address) })])[0]
+    useEntityQuery([HasValue(Player, { address: account.address })])[0],
   );
 
   // console.log(
@@ -95,7 +95,7 @@ const MainMenu: React.FC = () => {
         .map((id: any) => getComponentValue(Game, id))
         .sort((a: any, b: any) => b.id - a.id)
         .filter((game: any) => game.host !== 0n),
-    [gameEntities, Game]
+    [gameEntities, Game],
   );
 
   console.log("host", games[0].host);
