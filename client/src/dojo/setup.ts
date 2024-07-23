@@ -33,12 +33,12 @@ export async function setup({ ...config }: Config) {
     toriiClient,
     contractModels as any,
     [],
-    1000
+    1000,
   );
 
   const client = await setupWorld(
     new DojoProvider(config.manifest, config.rpcUrl),
-    config
+    config,
   );
 
   const rpcProvider = new RpcProvider({
@@ -49,7 +49,7 @@ export async function setup({ ...config }: Config) {
     masterAccount: new Account(
       rpcProvider,
       config.masterAddress,
-      config.masterPrivateKey
+      config.masterPrivateKey,
     ),
     feeTokenAddress: config.feeTokenAddress,
     accountClassHash: config.accountClassHash,

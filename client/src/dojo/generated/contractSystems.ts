@@ -58,7 +58,14 @@ export interface Attack extends Signer {
   gameId: number;
   attackerIndex: number;
   defenderIndex: number;
-  dispacted: number;
+  dispatched: number;
+  x: bigint;
+  y: bigint;
+  c: bigint;
+  s: bigint;
+  sqrt_ratio_hint: bigint;
+  seed: bigint;
+  beta: bigint;
 }
 
 export interface Defend extends Signer {
@@ -299,7 +306,14 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
       gameId,
       attackerIndex,
       defenderIndex,
-      dispacted,
+      dispatched,
+      x,
+      y,
+      c,
+      s,
+      sqrt_ratio_hint,
+      seed,
+      beta,
     }: Attack) => {
       try {
         return await provider.execute(
@@ -307,7 +321,19 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           {
             contractName: contract_name,
             entrypoint: "attack",
-            calldata: [gameId, attackerIndex, defenderIndex, dispacted],
+            calldata: [
+              gameId,
+              attackerIndex,
+              defenderIndex,
+              dispatched,
+              x,
+              y,
+              c,
+              s,
+              sqrt_ratio_hint,
+              seed,
+              beta,
+            ],
           },
           details,
         );

@@ -12,6 +12,7 @@ dev = "sozo --profile dev clean && sozo --profile dev build && sozo --profile de
 [dependencies]
 origami = { git = "https://github.com/dojoengine/origami", tag = "v0.7.2" }
 dojo = { git = "https://github.com/dojoengine/dojo", tag = "v0.7.2" }
+stark_vrf = { git = "https://github.com/dojoengine/stark-vrf", rev = "5a9e81e" }
 
 [[target.dojo]]
 

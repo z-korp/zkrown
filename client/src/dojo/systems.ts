@@ -1,16 +1,16 @@
 import type { IWorld } from "./generated/contractSystems";
 
 import * as SystemTypes from "./generated/contractSystems";
-import { ClientComponents } from "./createClientComponents";
+import { ClientModels } from "./models";
 
 export type SystemCalls = ReturnType<typeof systems>;
 
 export function systems({
   client,
-  clientComponents,
+  clientModels,
 }: {
   client: IWorld;
-  clientComponents: ClientComponents;
+  clientModels: ClientModels;
 }) {
   const extractedMessage = (message: string) => {
     return message.match(/\('([^']+)'\)/)?.[1];

@@ -57,13 +57,11 @@ impl TileImpl of TileTrait {
     }
 
     #[inline(always)]
-    fn attack(ref self: Tile, dispatched: u32, ref defender: Tile, order: felt252, config: Config) {
+    fn attack(ref self: Tile, dispatched: u32, ref defender: Tile, config: Config) {
         // [Check] Tile ids
         self.assert(config);
         defender.assert(config);
         assert(self.id != defender.id, errors::INVALID_ID);
-        // [Check] Order status is valid
-        assert(self.order == 0, errors::INVALID_ORDER_STATUS);
         // [Check] Not attacking self
         assert(self.owner != defender.owner, errors::INVALID_OWNER);
         // [Check] Dispatched < army
@@ -89,7 +87,6 @@ impl TileImpl of TileTrait {
         ref self: Tile,
         ref attacker: Tile,
         seed: felt252,
-        order: felt252,
         ref battles: Array<Battle>,
         config: Config,
     ) -> bool {
@@ -97,8 +94,6 @@ impl TileImpl of TileTrait {
         self.assert(config);
         attacker.assert(config);
         assert(self.id != attacker.id, errors::INVALID_ID);
-        // [Check] Order status is valid
-        assert(attacker.order != order, errors::INVALID_ORDER_STATUS);
         // [Check] Not defending self
         assert(self.owner != attacker.owner, errors::INVALID_OWNER);
         // [Check] Defended from

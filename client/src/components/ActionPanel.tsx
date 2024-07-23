@@ -16,6 +16,7 @@ import { BattleEvent, parseBattleEvent } from "@/utils/events";
 import { Battle } from "@/utils/types";
 import { BATTLE_EVENT } from "@/constants";
 import { Entity } from "@/graphql/generated/graphql";
+import { fetchVrfData } from "@/api/vrf";
 
 const SLEEP_TIME = 600; // ms
 
@@ -184,12 +185,29 @@ const ActionPanel = () => {
     setIsBtnActionDisabled(true);
 
     try {
+      const {
+        seed,
+        proof_gamma_x,
+        proof_gamma_y,
+        proof_c,
+        proof_s,
+        proof_verify_hint,
+        beta,
+      } = await fetchVrfData();
+
       await attack({
         account,
         gameId: game_id,
         attackerIndex: current_source,
         defenderIndex: current_target,
-        dispacted: armySelected,
+        dispatched: armySelected,
+        seed,
+        x: proof_gamma_x,
+        y: proof_gamma_y,
+        c: proof_c,
+        s: proof_s,
+        sqrt_ratio_hint: proof_verify_hint,
+        beta: beta,
       });
 
       await sleep(2000);
@@ -215,7 +233,7 @@ const ActionPanel = () => {
         await tryDefend();
       } catch (defendError: any) {
         console.log(
-          `First defend attempt failed with error: ${defendError.message}`
+          `First defend attempt failed with error: ${defendError.message}`,
         );
 
         try {
@@ -223,7 +241,7 @@ const ActionPanel = () => {
         } catch (secondDefendError: any) {
           console.log(`Defend failed on retry: ${secondDefendError.message}`);
           throw new Error(
-            `Defend failed on retry: ${secondDefendError.message}`
+            `Defend failed on retry: ${secondDefendError.message}`,
           );
         }
       }
