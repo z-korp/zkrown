@@ -2,7 +2,12 @@
 
 import { DojoProvider } from "@dojoengine/core";
 import { Config } from "../../../dojo.config.ts";
-import { Account, UniversalDetails, shortString } from "starknet";
+import {
+  Account,
+  InvokeFunctionResponse,
+  UniversalDetails,
+  shortString,
+} from "starknet";
 
 export interface Signer {
   account: Account;
@@ -314,7 +319,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
       sqrt_ratio_hint,
       seed,
       beta,
-    }: Attack) => {
+    }: Attack): Promise<InvokeFunctionResponse> => {
       try {
         return await provider.execute(
           account,

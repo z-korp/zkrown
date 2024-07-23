@@ -1,4 +1,4 @@
-import { Toaster } from "./components/ui/toaster";
+import { Toaster } from "./components/ui/sonner";
 import GameState from "./utils/gamestate";
 import MainMenu from "./components/MainMenu";
 import Lobby from "./components/Lobby";
@@ -18,7 +18,7 @@ function App() {
   // const { id } = useParams<{ id?: string }>();
 
   const { game_state, battleReport, setBattleReport } = useElementStore(
-    (state) => state
+    (state) => state,
   );
 
   // useEffect(() => {

@@ -26,7 +26,7 @@ const ovIdTarget = uuid();
 const ActionPanel = () => {
   const {
     setup: {
-      systemCalls: { supply, attack, defend, transfer },
+      systemCalls: { supply, attack, transfer },
       clientModels: {
         models: { Tile },
       },
@@ -195,7 +195,7 @@ const ActionPanel = () => {
         beta,
       } = await fetchVrfData();
 
-      await attack({
+      const ret = await attack({
         account,
         gameId: game_id,
         attackerIndex: current_source,
@@ -210,15 +210,8 @@ const ActionPanel = () => {
         beta: beta,
       });
 
-      await sleep(2000);
-
-      const tryDefend = async () => {
-        const ret = await defend({
-          account,
-          gameId: game_id,
-          attackerIndex: current_source,
-          defenderIndex: current_target,
-        });
+      if (ret !== null) {
+        console.log("attack ret", ret);
         const battleEvents: BattleEvent[] = ret.events
           .filter((e) => e.keys[0] === BATTLE_EVENT)
           .map((event) => parseBattleEvent(event));
@@ -227,31 +220,7 @@ const ActionPanel = () => {
           const battle = getBattleFromBattleEvents(battleEvents);
           setBattleResult(battle);
         }
-      };
-
-      try {
-        await tryDefend();
-      } catch (defendError: any) {
-        console.log(
-          `First defend attempt failed with error: ${defendError.message}`,
-        );
-
-        try {
-          await tryDefend();
-        } catch (secondDefendError: any) {
-          console.log(`Defend failed on retry: ${secondDefendError.message}`);
-          throw new Error(
-            `Defend failed on retry: ${secondDefendError.message}`,
-          );
-        }
       }
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        description: (
-          <code className="text-white text-xs">{error.message}</code>
-        ),
-      });
     } finally {
       await sleep(SLEEP_TIME); // otherwise value blink on tile
       Tile.removeOverride(ovIdSource);
