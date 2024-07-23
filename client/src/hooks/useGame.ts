@@ -18,7 +18,7 @@ export const useGame = () => {
 
   const gameComponentValue = useComponentValue(
     Game,
-    useEntityQuery([HasValue(Game, { id: game_id })])[0]
+    useEntityQuery([HasValue(Game, { id: game_id })])[0],
   );
 
   const sanitizedGame = useMemo(
@@ -26,7 +26,7 @@ export const useGame = () => {
       gameComponentValue === undefined
         ? undefined
         : sanitizeGame(gameComponentValue),
-    [gameComponentValue]
+    [gameComponentValue],
   );
 
   const current_turn = sanitizedGame

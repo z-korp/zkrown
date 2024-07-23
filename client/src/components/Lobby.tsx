@@ -32,7 +32,7 @@ const Lobby: React.FC = () => {
   const { toast } = useToast();
 
   const { set_game_state, set_game_id, game_id, round_limit } = useElementStore(
-    (state) => state
+    (state) => state,
   );
 
   const game = useGame();
@@ -54,7 +54,7 @@ const Lobby: React.FC = () => {
   }, [players]);
 
   useEffect(() => {
-    if (game && Number(game.seed.toString(16)) !== 0) {
+    if (game?.seed && Number(game.seed.toString(16)) !== 0) {
       // Game has started
       set_game_state(GameState.Game);
     }
