@@ -75,7 +75,7 @@ export async function setup({ ...config }: Config) {
     clientModels,
     contractComponents: clientModels,
     updates,
-    systemCalls: systems({ client, clientComponents: clientModels }),
+    systemCalls: systems({ client, clientModels }),
     config,
     world,
     burnerManager,
