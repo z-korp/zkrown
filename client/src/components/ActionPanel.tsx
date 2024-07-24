@@ -17,6 +17,7 @@ import { Battle } from "@/utils/types";
 import { BATTLE_EVENT } from "@/constants";
 import { Entity } from "@/graphql/generated/graphql";
 import { fetchVrfData } from "@/api/vrf";
+import { overridableComponent } from "@dojoengine/recs";
 
 const SLEEP_TIME = 600; // ms
 
@@ -33,6 +34,8 @@ const ActionPanel = () => {
     },
     account: { account },
   } = useDojo();
+
+  let TileOveridable = overridableComponent(Tile);
 
   const {
     current_source,
@@ -93,7 +96,7 @@ const ActionPanel = () => {
 
   useEffect(() => {
     if (sourceTile === null) return;
-    Tile.removeOverride(ovIdSource);
+    TileOveridable.removeOverride(ovIdSource);
     setSourceOverride();
 
     if (targetTile === null) return;
@@ -101,7 +104,7 @@ const ActionPanel = () => {
     if (phase === Phase.FORTIFY || phase === Phase.DEPLOY) {
       targetArmy = targetTile.army + armySelected;
     }
-    Tile.addOverride(ovIdTarget, {
+    TileOveridable.addOverride(ovIdTarget, {
       entity: targetEntity,
       value: {
         army: targetArmy,
@@ -121,7 +124,7 @@ const ActionPanel = () => {
       sourceArmy = sourceArmy + armySelected;
     }
 
-    Tile.addOverride(ovIdSource, {
+    TileOveridable.addOverride(ovIdSource, {
       entity: sourceEntity,
       value: {
         army: sourceArmy,
@@ -161,7 +164,7 @@ const ActionPanel = () => {
       });
     } finally {
       await sleep(SLEEP_TIME); // otherwise value blink on tile
-      Tile.removeOverride(ovIdSource);
+      TileOveridable.removeOverride(ovIdSource);
 
       removeSelected();
 
@@ -223,8 +226,8 @@ const ActionPanel = () => {
       }
     } finally {
       await sleep(SLEEP_TIME); // otherwise value blink on tile
-      Tile.removeOverride(ovIdSource);
-      Tile.removeOverride(ovIdTarget);
+      TileOveridable.removeOverride(ovIdSource);
+      TileOveridable.removeOverride(ovIdTarget);
 
       removeSelected();
       // Disable btn if there is an error to avoid stuck state
@@ -256,8 +259,8 @@ const ActionPanel = () => {
       });
     } finally {
       await sleep(SLEEP_TIME); // otherwise value blink on tile
-      Tile.removeOverride(ovIdSource);
-      Tile.removeOverride(ovIdTarget);
+      TileOveridable.removeOverride(ovIdSource);
+      TileOveridable.removeOverride(ovIdTarget);
 
       removeSelected();
 

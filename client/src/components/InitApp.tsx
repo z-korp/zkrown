@@ -40,6 +40,8 @@ const InitApp = () => {
     );
   }
 
+  if (setupResult === null) return null;
+
   return (
     <React.StrictMode>
       <DojoProvider value={setupResult}>

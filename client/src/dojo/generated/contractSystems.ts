@@ -227,7 +227,7 @@ export async function setupWorld(provider: DojoProvider, config: Config) {
           account,
           {
             contractName: contract_name,
-            entrypoint: "promote",
+            entrypoint: "grant",
             calldata: [gameId, playerIndex],
           },
           details,

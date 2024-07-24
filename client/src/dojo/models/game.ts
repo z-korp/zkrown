@@ -8,8 +8,8 @@ export class Game {
   public player_count: number;
   public nonce: number;
   public price: bigint;
-  public clock: bigint;
-  public penalty: bigint;
+  public clock: number;
+  public penalty: number;
   public limit: number;
   public config: number;
 
@@ -21,8 +21,8 @@ export class Game {
     this.player_count = game.player_count;
     this.nonce = game.nonce;
     this.price = BigInt(game.price);
-    this.clock = BigInt(game.clock);
-    this.penalty = BigInt(game.penalty);
+    this.clock = game.clock;
+    this.penalty = game.penalty;
     this.limit = game.limit;
     this.config = game.config;
   }
