@@ -2,14 +2,10 @@ import { useGetCurrentPlayer } from "@/hooks/useGetCurrentPlayer";
 import { useGetTiles } from "@/hooks/useGetTiles";
 import { usePhase } from "@/hooks/usePhase";
 import { Phase, useElementStore } from "@/utils/store";
-import { Milestone, ShieldPlus, Swords } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Slider } from "./ui/slider";
 import { useDojo } from "@/dojo/useDojo";
-import { Button } from "./ui/button";
 import { toast } from "./ui/use-toast";
 import { sleep } from "@/utils/time";
-import OverlayBattle from "./BattleReport/OverlayBattle";
 import { uuid } from "@latticexyz/utils";
 import { getBattleFromBattleEvents } from "@/utils/battle";
 import { BattleEvent, parseBattleEvent } from "@/utils/events";
@@ -17,7 +13,10 @@ import { Battle } from "@/utils/types";
 import { BATTLE_EVENT } from "@/constants";
 import { Entity } from "@/graphql/generated/graphql";
 import { fetchVrfData } from "@/api/vrf";
-import { overridableComponent } from "@dojoengine/recs";
+import { Swords, Milestone, ShieldPlus } from "lucide-react";
+import OverlayBattle from "./BattleReport/OverlayBattle";
+import { Button } from "./ui/button";
+import { Slider } from "./ui/slider";
 
 const SLEEP_TIME = 600; // ms
 
@@ -34,8 +33,6 @@ const ActionPanel = () => {
     },
     account: { account },
   } = useDojo();
-
-  let TileOveridable = overridableComponent(Tile);
 
   const {
     current_source,
@@ -96,7 +93,7 @@ const ActionPanel = () => {
 
   useEffect(() => {
     if (sourceTile === null) return;
-    TileOveridable.removeOverride(ovIdSource);
+    Tile.removeOverride(ovIdSource);
     setSourceOverride();
 
     if (targetTile === null) return;
@@ -104,7 +101,7 @@ const ActionPanel = () => {
     if (phase === Phase.FORTIFY || phase === Phase.DEPLOY) {
       targetArmy = targetTile.army + armySelected;
     }
-    TileOveridable.addOverride(ovIdTarget, {
+    Tile.addOverride(ovIdTarget, {
       entity: targetEntity,
       value: {
         army: targetArmy,
@@ -124,7 +121,9 @@ const ActionPanel = () => {
       sourceArmy = sourceArmy + armySelected;
     }
 
-    TileOveridable.addOverride(ovIdSource, {
+    console.log("sourceArmy", sourceArmy);
+    console.log("sourceTile", sourceTile);
+    Tile.addOverride(ovIdSource, {
       entity: sourceEntity,
       value: {
         army: sourceArmy,
@@ -164,7 +163,7 @@ const ActionPanel = () => {
       });
     } finally {
       await sleep(SLEEP_TIME); // otherwise value blink on tile
-      TileOveridable.removeOverride(ovIdSource);
+      Tile.removeOverride(ovIdSource);
 
       removeSelected();
 
@@ -226,8 +225,8 @@ const ActionPanel = () => {
       }
     } finally {
       await sleep(SLEEP_TIME); // otherwise value blink on tile
-      TileOveridable.removeOverride(ovIdSource);
-      TileOveridable.removeOverride(ovIdTarget);
+      Tile.removeOverride(ovIdSource);
+      Tile.removeOverride(ovIdTarget);
 
       removeSelected();
       // Disable btn if there is an error to avoid stuck state
@@ -259,8 +258,8 @@ const ActionPanel = () => {
       });
     } finally {
       await sleep(SLEEP_TIME); // otherwise value blink on tile
-      TileOveridable.removeOverride(ovIdSource);
-      TileOveridable.removeOverride(ovIdTarget);
+      Tile.removeOverride(ovIdSource);
+      Tile.removeOverride(ovIdTarget);
 
       removeSelected();
 
