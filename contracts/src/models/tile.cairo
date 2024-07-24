@@ -468,7 +468,7 @@ mod tests {
     }
 
     fn setup() -> Setup {
-        Setup { config: Config::Test }
+        Setup { config: Config::Complete }
     }
 
     #[test]

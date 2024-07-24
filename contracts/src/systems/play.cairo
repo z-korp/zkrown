@@ -129,7 +129,7 @@ mod play {
             let caller = get_caller_address();
             self.payable.pay(caller, price.into());
             // [Effect] Create game
-            self.hostable.create(world, player_name, price.into(), penalty, Config::Test)
+            self.hostable.create(world, player_name, price.into(), penalty, Config::Complete)
         }
 
         fn join(ref world: IWorldDispatcher, game_id: u32, player_name: felt252) {
