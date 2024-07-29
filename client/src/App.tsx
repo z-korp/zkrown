@@ -47,7 +47,7 @@ function App() {
         <Toaster
           toastOptions={{
             classNames: {
-              toast: "bg-stone-600 border-stone-900 border",
+              toast: "bg-stone-600 border-stone-900 border text-white",
             },
           }}
         />
