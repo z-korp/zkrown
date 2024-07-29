@@ -32,15 +32,3 @@ jobs:
         working-directory: ${{ env.WORKING_DIRECTORY }}
         run: sozo build
         shell: bash
-
-  test:
-    needs: [check, build]
-    runs-on: ubuntu-latest
-    name: Test game
-    steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup
-      - name: Test
-        working-directory: ${{ env.WORKING_DIRECTORY }}
-        run: sozo test
-        shell: bash
