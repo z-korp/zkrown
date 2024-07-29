@@ -15,7 +15,7 @@ const InitApp = () => {
   useEffect(() => {
     const initialize = async () => {
       try {
-        const result = await setup(dojoConfig);
+        const result = await setup(dojoConfig());
         setSetupResult(result);
       } catch (error) {
         console.error("Setup failed", error);
@@ -31,7 +31,7 @@ const InitApp = () => {
     return (
       <div className="font-vt323 w-full relative h-screen">
         <div className="absolute left-1/2 transform -translate-x-1/2 w-96 rounded-lg uppercase text-white text-4xl bg-stone-500 text-center">
-          zConqueror
+          zKrown
         </div>
         <div className="h-full flex pt-16 justify-center">
           <Loading text="Preparing the battlefield" />
@@ -39,6 +39,8 @@ const InitApp = () => {
       </div>
     );
   }
+
+  if (setupResult === null) return null;
 
   return (
     <React.StrictMode>

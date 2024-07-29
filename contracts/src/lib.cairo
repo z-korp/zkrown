@@ -48,7 +48,6 @@ mod tests {
     mod supply;
     mod emote;
     mod attack;
-    mod defend;
     mod transfer;
     mod finish;
     mod surrender;

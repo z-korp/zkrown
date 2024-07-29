@@ -34,7 +34,7 @@ const ROUND_COUNT: u32 = 10;
 #[available_gas(1_000_000_000)]
 fn test_transfer_valid() {
     // [Setup]
-    let (world, systems, context) = setup::spawn_game();
+    let (world, systems, context, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -103,7 +103,7 @@ fn test_transfer_valid() {
 #[should_panic(expected: ('Transfer: invalid player', 'ENTRYPOINT_FAILED',))]
 fn test_transfer_revert_invalid_player() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -148,7 +148,7 @@ fn test_transfer_revert_invalid_player() {
 #[should_panic(expected: ('Transfer: invalid owner', 'ENTRYPOINT_FAILED',))]
 fn test_transfer_revert_invalid_owner() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]

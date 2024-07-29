@@ -20,7 +20,9 @@ interface SidePlayerInfoProps {
 const SidePlayerInfo: React.FC<SidePlayerInfoProps> = ({ index, player }) => {
   const {
     setup: {
-      clientComponents: { Tile },
+      clientModels: {
+        models: { Tile },
+      },
     },
   } = useDojo();
 
@@ -28,7 +30,7 @@ const SidePlayerInfo: React.FC<SidePlayerInfoProps> = ({ index, player }) => {
   const { emote } = useEmotes();
   const [showEmote, setShowEmote] = useState(false);
   const [currentEmote, setCurrentEmote] = useState<string | undefined>(
-    undefined
+    undefined,
   );
 
   useEffect(() => {

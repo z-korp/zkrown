@@ -16,7 +16,7 @@ interface CardMenuProps {
 const CardMenu = ({ onClose, cards }: CardMenuProps) => {
   const {
     setup: {
-      client: { play },
+      systemCalls: { discard },
     },
     account: { account },
   } = useDojo();
@@ -35,13 +35,13 @@ const CardMenu = ({ onClose, cards }: CardMenuProps) => {
 
   const discardCards = () => {
     if (game.id !== undefined && game.id !== null) {
-      play.discard(
+      discard({
         account,
-        game.id,
-        selectedCards[0],
-        selectedCards[1],
-        selectedCards[2]
-      );
+        gameId: game.id,
+        cardOne: selectedCards[0],
+        cardTwo: selectedCards[1],
+        cardThree: selectedCards[2],
+      });
       setSelectedCards([]);
     }
   };

@@ -34,7 +34,7 @@ const ROUND_COUNT: u32 = 10;
 #[available_gas(1_000_000_000)]
 fn test_banish_2_players() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -60,7 +60,7 @@ fn test_banish_2_players() {
 #[available_gas(1_000_000_000)]
 fn test_banish_3_players() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -89,7 +89,7 @@ fn test_banish_3_players() {
 #[should_panic(expected: ('Game: not started', 'ENTRYPOINT_FAILED',))]
 fn test_banish_revert_game_not_started() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -110,7 +110,7 @@ fn test_banish_revert_game_not_started() {
 #[should_panic(expected: ('Banish: invalid condition', 'ENTRYPOINT_FAILED',))]
 fn test_banish_revert_invalid_condition() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -133,7 +133,7 @@ fn test_banish_revert_invalid_condition() {
 #[should_panic(expected: ('Game: is over', 'ENTRYPOINT_FAILED',))]
 fn test_banish_revert_game_is_over() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]

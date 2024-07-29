@@ -13,6 +13,10 @@ mod setup {
     use dojo::world::{IWorldDispatcherTrait, IWorldDispatcher};
     use dojo::test_utils::{spawn_test_world, deploy_contract};
 
+    // External dependencies
+
+    use stark_vrf::ecvrf::{Proof, Point, ECVRFTrait};
+
     // Internal imports
 
     use zkrown::tests::mocks::erc20::{
@@ -62,7 +66,7 @@ mod setup {
         IERC20Dispatcher { contract_address: address }
     }
 
-    fn spawn_game() -> (IWorldDispatcher, Systems, Context) {
+    fn spawn_game() -> (IWorldDispatcher, Systems, Context, Proof, felt252, felt252) {
         // [Setup] World
         let mut models = core::array::ArrayTrait::new();
         models.append(zkrown::models::index::game::TEST_CLASS_HASH);
@@ -93,7 +97,20 @@ mod setup {
         faucet.mint();
         erc20.approve(contract_address, ERC20::FAUCET_AMOUNT);
 
+        // [Setup] Game if mode is set
+        let proof = Proof {
+            gamma: Point {
+                x: 3444596426869008043602370726459741399042335986798810610561332574893421899427,
+                y: 2123064846425363891663217062216262307893599982125329045727025672352245240380
+            },
+            c: 1009013861275206330536599757704085446828267833031347631539467302052051465831,
+            s: 1681627904985955485699279892692743421296426964282826567194146317024516561994,
+            sqrt_ratio_hint: 2419289110723846757845450895535193600906321980090223281508354504968416532707,
+        };
+        let seed = 48;
+        let beta = 502998338520997804786462808944365626190955582373168748079635287864535203785;
+
         // [Return]
-        (world, systems, context)
+        (world, systems, context, proof, seed, beta)
     }
 }

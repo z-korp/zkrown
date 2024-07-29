@@ -6,6 +6,10 @@ use starknet::ContractAddress;
 
 use dojo::world::IWorldDispatcher;
 
+// External imports
+
+use stark_vrf::ecvrf::Proof;
+
 // Interfaces
 
 #[dojo::interface]
@@ -30,9 +34,11 @@ trait IPlay<TContractState> {
         game_id: u32,
         attacker_index: u8,
         defender_index: u8,
-        dispatched: u32
+        dispatched: u32,
+        proof: Proof,
+        seed: felt252,
+        beta: felt252
     );
-    fn defend(ref world: IWorldDispatcher, game_id: u32, attacker_index: u8, defender_index: u8);
     fn discard(
         ref world: IWorldDispatcher, game_id: u32, card_one: u8, card_two: u8, card_three: u8
     );
@@ -56,6 +62,8 @@ mod play {
     use zkrown::components::payable::PayableComponent;
     use zkrown::components::playable::PlayableComponent;
 
+    // External imports
+
     // Internal imports
 
     use zkrown::types::config::Config;
@@ -63,7 +71,7 @@ mod play {
 
     // Local imports
 
-    use super::{IHost, IPlay};
+    use super::{IHost, IPlay, Proof};
 
     // Components
 
@@ -121,7 +129,7 @@ mod play {
             let caller = get_caller_address();
             self.payable.pay(caller, price.into());
             // [Effect] Create game
-            self.hostable.create(world, player_name, price.into(), penalty, Config::Test)
+            self.hostable.create(world, player_name, price.into(), penalty, Config::Complete)
         }
 
         fn join(ref world: IWorldDispatcher, game_id: u32, player_name: felt252) {
@@ -184,15 +192,16 @@ mod play {
             game_id: u32,
             attacker_index: u8,
             defender_index: u8,
-            dispatched: u32
+            dispatched: u32,
+            proof: Proof,
+            seed: felt252,
+            beta: felt252
         ) {
-            self.playable.attack(world, game_id, attacker_index, defender_index, dispatched);
-        }
-
-        fn defend(
-            ref world: IWorldDispatcher, game_id: u32, attacker_index: u8, defender_index: u8
-        ) {
-            self.playable.defend(world, game_id, attacker_index, defender_index);
+            self
+                .playable
+                .attack(
+                    world, game_id, attacker_index, defender_index, dispatched, proof, seed, beta
+                );
         }
 
         fn discard(

@@ -23,8 +23,10 @@ interface GameRowProps {
 const GameRow: React.FC<GameRowProps> = ({ game, setPlayerName }) => {
   const {
     setup: {
-      client: { host },
-      clientComponents: { Player },
+      systemCalls: { join },
+      clientModels: {
+        models: { Player },
+      },
     },
     account: { account },
   } = useDojo();
@@ -51,7 +53,7 @@ const GameRow: React.FC<GameRowProps> = ({ game, setPlayerName }) => {
       return;
     }
     try {
-      await host.join(account, gameid, player_name);
+      await join({ account, gameId: gameid, name: player_name });
       set_game_id(gameid);
       set_game_state(GameState.Lobby);
     } catch (error: any) {

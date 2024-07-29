@@ -2,20 +2,21 @@ import { useGetCurrentPlayer } from "@/hooks/useGetCurrentPlayer";
 import { useGetTiles } from "@/hooks/useGetTiles";
 import { usePhase } from "@/hooks/usePhase";
 import { Phase, useElementStore } from "@/utils/store";
-import { Milestone, ShieldPlus, Swords } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Slider } from "./ui/slider";
 import { useDojo } from "@/dojo/useDojo";
-import { Button } from "./ui/button";
 import { toast } from "./ui/use-toast";
 import { sleep } from "@/utils/time";
-import OverlayBattle from "./BattleReport/OverlayBattle";
 import { uuid } from "@latticexyz/utils";
 import { getBattleFromBattleEvents } from "@/utils/battle";
 import { BattleEvent, parseBattleEvent } from "@/utils/events";
 import { Battle } from "@/utils/types";
 import { BATTLE_EVENT } from "@/constants";
 import { Entity } from "@/graphql/generated/graphql";
+import { fetchVrfData } from "@/api/vrf";
+import { Swords, Milestone, ShieldPlus } from "lucide-react";
+import OverlayBattle from "./BattleReport/OverlayBattle";
+import { Button } from "./ui/button";
+import { Slider } from "./ui/slider";
 
 const SLEEP_TIME = 600; // ms
 
@@ -25,8 +26,10 @@ const ovIdTarget = uuid();
 const ActionPanel = () => {
   const {
     setup: {
-      client: { play },
-      clientComponents: { Tile },
+      systemCalls: { supply, attack, transfer },
+      clientModels: {
+        models: { Tile },
+      },
     },
     account: { account },
   } = useDojo();
@@ -143,7 +146,12 @@ const ActionPanel = () => {
     setIsBtnActionDisabled(true);
 
     try {
-      await play.supply(account, game_id, current_source, armySelected);
+      await supply({
+        account,
+        gameId: game_id,
+        tileIndex: current_source,
+        supply: armySelected,
+      });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -177,23 +185,33 @@ const ActionPanel = () => {
     setIsBtnActionDisabled(true);
 
     try {
-      await play.attack(
+      const {
+        seed,
+        proof_gamma_x,
+        proof_gamma_y,
+        proof_c,
+        proof_s,
+        proof_verify_hint,
+        beta,
+      } = await fetchVrfData();
+
+      const ret = await attack({
         account,
-        game_id,
-        current_source,
-        current_target,
-        armySelected
-      );
+        gameId: game_id,
+        attackerIndex: current_source,
+        defenderIndex: current_target,
+        dispatched: armySelected,
+        seed,
+        x: proof_gamma_x,
+        y: proof_gamma_y,
+        c: proof_c,
+        s: proof_s,
+        sqrt_ratio_hint: proof_verify_hint,
+        beta: beta,
+      });
 
-      await sleep(2000);
-
-      const tryDefend = async () => {
-        const ret = await play.defend(
-          account,
-          game_id,
-          current_source,
-          current_target
-        );
+      if (ret !== null) {
+        console.log("attack ret", ret);
         const battleEvents: BattleEvent[] = ret.events
           .filter((e) => e.keys[0] === BATTLE_EVENT)
           .map((event) => parseBattleEvent(event));
@@ -202,31 +220,7 @@ const ActionPanel = () => {
           const battle = getBattleFromBattleEvents(battleEvents);
           setBattleResult(battle);
         }
-      };
-
-      try {
-        await tryDefend();
-      } catch (defendError: any) {
-        console.log(
-          `First defend attempt failed with error: ${defendError.message}`
-        );
-
-        try {
-          await tryDefend();
-        } catch (secondDefendError: any) {
-          console.log(`Defend failed on retry: ${secondDefendError.message}`);
-          throw new Error(
-            `Defend failed on retry: ${secondDefendError.message}`
-          );
-        }
       }
-    } catch (error: any) {
-      toast({
-        variant: "destructive",
-        description: (
-          <code className="text-white text-xs">{error.message}</code>
-        ),
-      });
     } finally {
       await sleep(SLEEP_TIME); // otherwise value blink on tile
       Tile.removeOverride(ovIdSource);
@@ -246,13 +240,13 @@ const ActionPanel = () => {
     setIsBtnActionDisabled(true);
 
     try {
-      await play.transfer(
+      await transfer({
         account,
-        game_id,
-        current_source,
-        current_target,
-        armySelected
-      );
+        gameId: game_id,
+        sourceIndex: current_source,
+        targetIndex: current_target,
+        army: armySelected,
+      });
     } catch (error: any) {
       toast({
         variant: "destructive",

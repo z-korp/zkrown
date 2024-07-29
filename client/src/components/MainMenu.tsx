@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useDojo } from "@/dojo/useDojo";
 import { useToast } from "./ui/use-toast";
 import { useComponentValue, useEntityQuery } from "@dojoengine/react";
-import { HasValue, getComponentValue } from "@dojoengine/recs";
+import { Has, HasValue, getComponentValue } from "@dojoengine/recs";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "./ui/table";
 import GameRow from "./GameRow";
 import { DialogCreateJoin } from "./DialogCreateJoin";
@@ -23,26 +23,29 @@ const MainMenu: React.FC = () => {
 
   const {
     setup: {
-      client: { host },
-      clientComponents: { Game, Player },
+      systemCalls: { create },
+      clientModels: {
+        models: { Game, Player },
+      },
     },
     account: { account },
   } = useDojo();
 
   const game = useComponentValue(
     Game,
-    useEntityQuery([HasValue(Game, { host: BigInt(account.address) })])
+    useEntityQuery([HasValue(Game, { host: BigInt(account.address) })])[0],
   );
   const player = useComponentValue(
     Player,
-    useEntityQuery([HasValue(Player, { address: BigInt(account.address) })])
+    useEntityQuery([HasValue(Player, { address: BigInt(account.address) })])[0],
   );
 
   const [hours, setHours] = useState<number | null>(null);
   const [minutes, setMinutes] = useState(5);
-
   // if player is host of a game, go to the lobby
   useEffect(() => {
+    console.log("player", player);
+    console.log("game", game);
     if (player) {
       set_game_id(player.game_id);
       set_game_state(GameState.Lobby);
@@ -65,12 +68,12 @@ const MainMenu: React.FC = () => {
 
     try {
       const totalSeconds = hours ? hours * 3600 + minutes * 60 : minutes * 60;
-      await host.create(
+      await create({
         account,
-        player_name,
-        /* price */ BigInt(0),
-        /* penalty*/ totalSeconds
-      );
+        name: player_name,
+        price: BigInt(0),
+        penalty: totalSeconds,
+      });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -81,16 +84,14 @@ const MainMenu: React.FC = () => {
     }
   };
 
-  const gameEntities: any = useEntityQuery([
-    HasValue(Game, { seed: BigInt(0) }),
-  ]);
+  const gameEntities: any = useEntityQuery([Has(Game)]);
   const games = useMemo(
     () =>
       gameEntities
         .map((id: any) => getComponentValue(Game, id))
         .sort((a: any, b: any) => b.id - a.id)
         .filter((game: any) => game.host !== 0n),
-    [gameEntities, Game]
+    [gameEntities, Game],
   );
 
   if (!games) return null;
@@ -99,7 +100,7 @@ const MainMenu: React.FC = () => {
       <div className="flex flex-col justify-center items-center gap-6">
         <div className="w-full relative h-16">
           <div className="absolute left-1/2 transform -translate-x-1/2 w-96 rounded-lg uppercase text-white text-4xl bg-stone-500 text-center">
-            zConqueror
+            zKrown
           </div>
           <div className="absolute right-0">
             <WalletButton />

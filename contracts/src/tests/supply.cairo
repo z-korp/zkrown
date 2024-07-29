@@ -32,7 +32,7 @@ const ROUND_COUNT: u32 = 10;
 #[test]
 #[available_gas(1_000_000_000)]
 fn test_supply() {
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -75,7 +75,7 @@ fn test_supply() {
 #[should_panic(expected: ('Supply: invalid player', 'ENTRYPOINT_FAILED',))]
 fn test_supply_revert_invalid_player() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -100,7 +100,7 @@ fn test_supply_revert_invalid_player() {
 #[should_panic(expected: ('Supply: invalid owner', 'ENTRYPOINT_FAILED',))]
 fn test_supply_revert_invalid_owner() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]

@@ -1,14 +1,14 @@
 import { getSyncEntities } from "@dojoengine/state";
-import { DojoProvider } from "@dojoengine/core";
 import * as torii from "@dojoengine/torii-client";
-import { createClientComponents } from "./createClientComponents";
-import { defineContractComponents } from "./generated/contractComponents";
-import { setupWorld } from "./generated/contractSystems.ts";
 import { systems } from "./systems.ts";
-import { world } from "./world";
+import { defineContractComponents } from "./generated/contractModels.ts";
+import { world } from "./world.ts";
 import { Config } from "../../dojo.config.ts";
-import { Account, RpcProvider } from "starknet";
+import { setupWorld } from "./generated/contractSystems.ts";
+import { DojoProvider } from "@dojoengine/core";
 import { BurnerManager } from "@dojoengine/create-burner";
+import { Account, RpcProvider } from "starknet";
+import { models } from "./models.ts";
 import { createUpdates } from "./createUpdates";
 
 export type SetupResult = Awaited<ReturnType<typeof setup>>;
@@ -23,24 +23,26 @@ export async function setup({ ...config }: Config) {
   });
 
   // create contract components
-  const contractComponents = defineContractComponents(world);
+  const contractModels = defineContractComponents(world);
 
   // create client components
-  const clientComponents = createClientComponents({ contractComponents });
+  const clientModels = models({ contractModels });
 
   // create updates manager
-  const updates = await createUpdates(clientComponents);
+  const updates = await createUpdates(clientModels);
 
   // fetch all existing entities from torii
+  // await getSyncEntities(toriiClient, contractModels as any, []);
   const sync = await getSyncEntities(
     toriiClient,
-    contractComponents as any,
-    []
+    contractModels as any,
+    [],
+    1000,
   );
 
   const client = await setupWorld(
     new DojoProvider(config.manifest, config.rpcUrl),
-    config
+    config,
   );
 
   const rpcProvider = new RpcProvider({
@@ -51,7 +53,7 @@ export async function setup({ ...config }: Config) {
     masterAccount: new Account(
       rpcProvider,
       config.masterAddress,
-      config.masterPrivateKey
+      config.masterPrivateKey,
     ),
     feeTokenAddress: config.feeTokenAddress,
     accountClassHash: config.accountClassHash,
@@ -70,11 +72,11 @@ export async function setup({ ...config }: Config) {
 
   return {
     client,
-    clientComponents,
-    contractComponents,
-    systemCalls: systems({ client, clientComponents }),
-    config,
+    clientModels,
+    contractComponents: clientModels,
     updates,
+    systemCalls: systems({ client, clientModels }),
+    config,
     world,
     burnerManager,
     rpcProvider,

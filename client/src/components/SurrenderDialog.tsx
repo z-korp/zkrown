@@ -16,15 +16,15 @@ import { useDojo } from "@/dojo/useDojo";
 const SurrenderDialog = () => {
   const {
     setup: {
-      client: { play },
+      systemCalls: { surrender },
     },
     account: { account },
   } = useDojo();
 
   const { game_id } = useElementStore((state) => state);
 
-  const surrender = async () => {
-    if (game_id) await play.surrender(account, game_id);
+  const surrenderFunc = async () => {
+    if (game_id) await surrender({ account, gameId: game_id });
   };
 
   return (
@@ -54,7 +54,7 @@ const SurrenderDialog = () => {
                 <Button
                   variant="destructive"
                   className="m-4 gap-2"
-                  onClick={surrender}
+                  onClick={surrenderFunc}
                 >
                   Yes I want to surrender !
                   <Flag />

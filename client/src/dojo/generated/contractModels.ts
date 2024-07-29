@@ -19,8 +19,8 @@ export function defineContractComponents(world: World) {
           player_count: RecsType.Number,
           nonce: RecsType.Number,
           price: RecsType.BigInt,
-          clock: RecsType.BigInt,
-          penalty: RecsType.BigInt,
+          clock: RecsType.Number,
+          penalty: RecsType.Number,
           limit: RecsType.Number,
           config: RecsType.Number,
         },
@@ -42,7 +42,7 @@ export function defineContractComponents(world: World) {
             ],
             customTypes: [],
           },
-        }
+        },
       );
     })(),
     Player: (() => {
@@ -73,7 +73,7 @@ export function defineContractComponents(world: World) {
             ],
             customTypes: [],
           },
-        }
+        },
       );
     })(),
     Tile: (() => {
@@ -95,7 +95,7 @@ export function defineContractComponents(world: World) {
             types: ["u32", "u8", "u32", "u32", "u32", "u8", "u8", "felt252"],
             customTypes: [],
           },
-        }
+        },
       );
     })(),
   };

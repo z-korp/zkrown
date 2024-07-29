@@ -20,6 +20,9 @@ use zkrown::models::tile::Tile;
 use zkrown::systems::play::{IHostDispatcherTrait, IPlayDispatcherTrait};
 use zkrown::tests::setup::{setup, setup::{Systems, HOST, PLAYER, ANYONE}};
 
+// External dependencies
+use stark_vrf::ecvrf::{Proof, Point};
+
 // Constants
 
 const HOST_NAME: felt252 = 'HOST';
@@ -34,7 +37,7 @@ const ROUND_COUNT: u32 = 10;
 #[available_gas(1_000_000_000)]
 fn test_attack() {
     // [Setup]
-    let (world, systems, context) = setup::spawn_game();
+    let (world, systems, context, proof, seed, beta) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -81,7 +84,7 @@ fn test_attack() {
 
     // [Attack]
     let distpached: u32 = (army + supply - 1).into();
-    systems.play.attack(game_id, attacker, defender, distpached);
+    systems.play.attack(game_id, attacker, defender, distpached, proof, seed, beta);
 }
 
 
@@ -90,7 +93,7 @@ fn test_attack() {
 #[should_panic(expected: ('Attack: invalid player', 'ENTRYPOINT_FAILED',))]
 fn test_attack_revert_invalid_player() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, proof, seed, beta) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -123,7 +126,7 @@ fn test_attack_revert_invalid_player() {
 
     // [Attack]
     set_contract_address(starknet::contract_address_const::<1>());
-    systems.play.attack(game_id, 0, 0, 0);
+    systems.play.attack(game_id, 0, 0, 0, proof, seed, beta);
 }
 
 
@@ -132,7 +135,7 @@ fn test_attack_revert_invalid_player() {
 #[should_panic(expected: ('Attack: invalid owner', 'ENTRYPOINT_FAILED',))]
 fn test_attack_revert_invalid_owner() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, proof, seed, beta) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -175,5 +178,5 @@ fn test_attack_revert_invalid_owner() {
     };
 
     // [Attack]
-    systems.play.attack(game_id, index, 0, 0);
+    systems.play.attack(game_id, index, 0, 0, proof, seed, beta);
 }

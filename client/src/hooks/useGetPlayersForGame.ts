@@ -7,7 +7,9 @@ import { useMemo } from "react";
 export function useGetPlayersForGame(gameId: number | undefined) {
   const {
     setup: {
-      clientComponents: { Player },
+      clientModels: {
+        models: { Player },
+      },
     },
   } = useDojo();
 
@@ -22,7 +24,7 @@ export function useGetPlayersForGame(gameId: number | undefined) {
         .filter((player) => player.address)
         .sort((a, b) => a.index - b.index)
         .map(sanitizePlayer),
-    [playerEntities, Player]
+    [playerEntities, Player],
   );
 
   return {

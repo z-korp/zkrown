@@ -25,14 +25,14 @@ import Loading from "./Loading";
 const Lobby: React.FC = () => {
   const {
     setup: {
-      client: { host },
+      systemCalls: { start, remove, leave, kick, promote },
     },
     account: { account },
   } = useDojo();
   const { toast } = useToast();
 
   const { set_game_state, set_game_id, game_id, round_limit } = useElementStore(
-    (state) => state
+    (state) => state,
   );
 
   const game = useGame();
@@ -54,7 +54,7 @@ const Lobby: React.FC = () => {
   }, [players]);
 
   useEffect(() => {
-    if (game && Number(game.seed.toString(16)) !== 0) {
+    if (game?.seed && Number(game.seed.toString(16)) !== 0) {
       // Game has started
       set_game_state(GameState.Game);
     }
@@ -77,7 +77,7 @@ const Lobby: React.FC = () => {
     }
     try {
       setStartLoading(true);
-      await host.start(account, game_id, round_limit);
+      await start({ account, gameId: game_id, roundLimit: round_limit });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -94,9 +94,9 @@ const Lobby: React.FC = () => {
     try {
       setLeaveLoading(true);
       if (isHost(game.host, account.address)) {
-        await host.delete_game(account, game.id);
+        await remove({ account, gameId: game.id });
       } else {
-        await host.leave(account, game_id);
+        await leave({ account, gameId: game_id });
       }
 
       set_game_id(0);
@@ -116,7 +116,7 @@ const Lobby: React.FC = () => {
   const kickPlayer = async (player_index: number, game_id: number) => {
     try {
       setKickLoading(true);
-      await host.kick(account, game_id, player_index);
+      await kick({ account, gameId: game_id, playerIndex: player_index });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -132,7 +132,7 @@ const Lobby: React.FC = () => {
   const transferHost = async (player_index: number, game_id: number) => {
     try {
       setTransferLoading(true);
-      await host.transfer(account, game_id, player_index);
+      await promote({ account, gameId: game_id, playerIndex: player_index });
     } catch (error: any) {
       toast({
         variant: "destructive",
@@ -168,7 +168,7 @@ const Lobby: React.FC = () => {
           </Button>
 
           <div className="absolute left-1/2 transform -translate-x-1/2 w-96 rounded-lg uppercase text-white text-4xl bg-stone-500 text-center">
-            zConqueror
+            zKrown
           </div>
           <div className="absolute right-0">
             <WalletButton />

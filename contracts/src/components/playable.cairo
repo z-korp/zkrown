@@ -23,6 +23,7 @@ mod PlayableComponent {
     // External imports
 
     use origami::random::deck::{Deck, DeckTrait};
+    use stark_vrf::ecvrf::{Proof, Point, ECVRFTrait};
 
     // Internal imports
 
@@ -63,12 +64,15 @@ mod PlayableComponent {
         const BANISH_INVALID_CONDITION: felt252 = 'Banish: invalid condition';
         const SURRENDER_INVALID_PLAYER: felt252 = 'Surrender: invalid player';
         const EMOTE_INVALID_PLAYER: felt252 = 'Emote: invalid player';
+        const PLAYABLE_INVALID_PROOF: felt252 = 'Playable:: invalid proof';
+        const PLAYABLE_INVALID_BETA: felt252 = 'Playable:: invalid beta';
+        const PLAYABLE_INVALID_SEED: felt252 = 'Playable:: invalid seed';
     }
 
-    // Storage
-
     #[storage]
-    struct Storage {}
+    struct Storage {
+        seeds: LegacyMap::<felt252, bool>,
+    }
 
     // Events
 
@@ -110,10 +114,27 @@ mod PlayableComponent {
             game_id: u32,
             attacker_index: u8,
             defender_index: u8,
-            dispatched: u32
+            dispatched: u32,
+            proof: Proof,
+            seed: felt252,
+            beta: felt252
         ) {
             // [Setup] Datastore
             let mut store: Store = StoreTrait::new(world);
+
+            // [Check] Verify new seed
+            assert(!self.seeds.read(beta), errors::PLAYABLE_INVALID_SEED);
+
+            // [Check] Verify seed
+            let public_key = Point {
+                x: 1173415989117130929327570255074235160147948257071299476886506896372006087277,
+                y: 2678963217040729019448869120760864799670267652070964164868211652985974476023,
+            };
+            let ecvrf = ECVRFTrait::new(public_key);
+            let computed = ecvrf
+                .verify(proof, array![seed].span())
+                .expect(errors::PLAYABLE_INVALID_PROOF);
+            assert(computed == beta, errors::PLAYABLE_INVALID_BETA);
 
             // [Check] Turn
             let mut game: Game = store.game(game_id);
@@ -126,49 +147,21 @@ mod PlayableComponent {
 
             // [Check] Tiles owner
             let mut attacker = store.tile(game, attacker_index);
-            let mut defender = store.tile(game, defender_index);
-            assert(attacker.owner == player.index.into(), errors::ATTACK_INVALID_OWNER);
-
-            // [Compute] Attack
-            let order = get_tx_info().unbox().transaction_hash;
-            attacker.attack(dispatched, ref defender, order, game.config.into());
-
-            // [Effect] Update tiles
-            store.set_tiles(array![attacker, defender].span());
-        }
-
-        fn defend(
-            self: @ComponentState<TContractState>,
-            world: IWorldDispatcher,
-            game_id: u32,
-            attacker_index: u8,
-            defender_index: u8
-        ) {
-            // [Setup] Datastore
-            let mut store: Store = StoreTrait::new(world);
-
-            // [Check] Turn
-            let mut game: Game = store.game(game_id);
-            assert(game.turn() == Turn::Attack, errors::DEFEND_INVALID_TURN);
-
-            // [Check] Caller is player
-            let caller = get_caller_address();
-            let mut player = store.current_player(game);
-            assert(player.address == caller.into(), errors::DEFEND_INVALID_PLAYER);
-
-            // [Check] Tiles owner
-            let mut attacker = store.tile(game, attacker_index);
             let attacker_troops = attacker.dispatched;
             let mut defender = store.tile(game, defender_index);
             let defender_troops = defender.army;
-            assert(attacker.owner == player.index.into(), errors::DEFEND_INVALID_OWNER);
+            assert(attacker.owner == player.index.into(), errors::ATTACK_INVALID_OWNER);
+
+            // [Compute] Attack
+            attacker.attack(dispatched, ref defender, game.config.into());
+
+            // [Effect] Update tiles
+            store.set_tiles(array![attacker, defender].span());
 
             // [Compute] Defend
             let defender_player = store.player(game, defender.owner.try_into().unwrap());
-            let order = get_tx_info().unbox().transaction_hash;
             let mut battles: Array<Battle> = array![];
-            let status = defender
-                .defend(ref attacker, game.seed, order, ref battles, game.config.into());
+            let status = defender.defend(ref attacker, seed, ref battles, game.config.into());
             player.conqueror = player.conqueror || status;
 
             // [Effect] Update tiles

@@ -8,7 +8,9 @@ import { useMemo } from "react";
 export const useGame = () => {
   const {
     setup: {
-      clientComponents: { Game },
+      clientModels: {
+        models: { Game },
+      },
     },
   } = useDojo();
 
@@ -16,7 +18,7 @@ export const useGame = () => {
 
   const gameComponentValue = useComponentValue(
     Game,
-    useEntityQuery([HasValue(Game, { id: game_id })])
+    useEntityQuery([HasValue(Game, { id: game_id })])[0],
   );
 
   const sanitizedGame = useMemo(
@@ -24,7 +26,7 @@ export const useGame = () => {
       gameComponentValue === undefined
         ? undefined
         : sanitizeGame(gameComponentValue),
-    [gameComponentValue]
+    [gameComponentValue],
   );
 
   const current_turn = sanitizedGame

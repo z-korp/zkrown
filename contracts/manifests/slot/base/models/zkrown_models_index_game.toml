@@ -1,7 +1,7 @@
 kind = "DojoModel"
 class_hash = "0x25fd9102090c577eaeb467e5191c2ab9e357b13fffb1a426615529da8fe3cd3"
 original_class_hash = "0x25fd9102090c577eaeb467e5191c2ab9e357b13fffb1a426615529da8fe3cd3"
-abi = "manifests/dev/abis/base/models/zkrown_models_index_game.json"
+abi = "manifests/slot/abis/base/models/zkrown_models_index_game.json"
 name = "zkrown::models::index::game"
 
 [[members]]

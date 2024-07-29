@@ -34,7 +34,7 @@ const ROUND_COUNT: u32 = 10;
 #[available_gas(1_000_000_000)]
 fn test_host_create_and_join() {
     // [Setup]
-    let (world, systems, context) = setup::spawn_game();
+    let (world, systems, context, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -97,7 +97,7 @@ fn test_host_create_and_join() {
 #[available_gas(1_000_000_000)]
 fn test_host_create_and_host_deletes() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -113,7 +113,7 @@ fn test_host_create_and_host_deletes() {
 #[available_gas(1_000_000_000)]
 fn test_host_create_and_player_leaves() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -131,7 +131,7 @@ fn test_host_create_and_player_leaves() {
 #[available_gas(1_000_000_000)]
 fn test_host_create_and_grant_and_host_leaves() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -153,7 +153,7 @@ fn test_host_create_and_grant_and_host_leaves() {
 #[available_gas(1_000_000_000)]
 fn test_host_create_and_tranfer_and_kick_host() {
     // [Setup]
-    let (world, systems, _) = setup::spawn_game();
+    let (world, systems, _, _, _, _) = setup::spawn_game();
     let mut store = StoreTrait::new(world);
 
     // [Create]
@@ -178,7 +178,7 @@ fn test_host_create_and_tranfer_and_kick_host() {
 #[should_panic(expected: ('Game: has started', 'ENTRYPOINT_FAILED',))]
 fn test_host_start_then_join_revert_started() {
     // [Setup]
-    let (_, systems, _) = setup::spawn_game();
+    let (_, systems, _, _, _, _) = setup::spawn_game();
 
     // [Create]
     let game_id = systems.host.create(HOST_NAME, PRICE, PENALTY);
@@ -197,7 +197,7 @@ fn test_host_start_then_join_revert_started() {
 #[should_panic(expected: ('Game: has started', 'ENTRYPOINT_FAILED',))]
 fn test_host_start_then_leave_revert_started() {
     // [Setup]
-    let (_, systems, _) = setup::spawn_game();
+    let (_, systems, _, _, _, _) = setup::spawn_game();
 
     // [Create]
     let game_id = systems.host.create(HOST_NAME, PRICE, PENALTY);
