@@ -8,7 +8,7 @@ sierra-replace-ids = true
 
 [scripts]
 dev = "sozo --profile dev clean && sozo --profile dev build && sozo --profile dev migrate plan && sozo --profile dev migrate apply"
-slot = "NAME=v1 && sozo --profile slot clean && sozo --profile slot build && sozo --profile slot migrate plan --name $NAME && sozo --profile slot migrate apply --name $NAME"
+slot = "NAME=v2 && sozo --profile slot clean && sozo --profile slot build && sozo --profile slot migrate plan --name $NAME && sozo --profile slot migrate apply --name $NAME"
 
 [dependencies]
 origami = { git = "https://github.com/dojoengine/origami", tag = "v0.7.2" }

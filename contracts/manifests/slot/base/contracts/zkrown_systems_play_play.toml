@@ -1,6 +1,6 @@
 kind = "DojoContract"
-class_hash = "0x2a7c5ad77f18cb10e2a660c8deeee4816967944d2714f8059bb26307dffbe6f"
-original_class_hash = "0x2a7c5ad77f18cb10e2a660c8deeee4816967944d2714f8059bb26307dffbe6f"
+class_hash = "0x6625a833f9375e7f0355ed19ade5221b6de6c651814cca922081f84354ab58e"
+original_class_hash = "0x6625a833f9375e7f0355ed19ade5221b6de6c651814cca922081f84354ab58e"
 base_class_hash = "0x0"
 abi = "manifests/slot/abis/base/contracts/zkrown_systems_play_play.json"
 reads = []
