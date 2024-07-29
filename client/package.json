@@ -57,7 +57,7 @@
     "starknet": "6.10.0",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
-    "vite-plugin-top-level-await": "^1.4.1",
+    "vite-plugin-top-level-await": "1.4.2",
     "vite-plugin-wasm": "^3.2.2",
     "zod": "^3.22.2",
     "zustand": "^4.4.1"
