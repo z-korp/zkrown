@@ -1,10 +1,8 @@
-"use client";
-
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import * as React from "react";
-
 import { cn } from "@/lib/utils";
 import { Button } from "./button";
+
 export const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SliderPrimitive.Root> & {
@@ -24,7 +22,7 @@ export const Slider = React.forwardRef<
       shouldShowNumber = true,
       ...props
     },
-    ref
+    ref,
   ) => {
     const colorClasses: any = {
       green: {
@@ -76,7 +74,7 @@ export const Slider = React.forwardRef<
           onValueChange={handleValueChange}
           className={cn(
             "relative flex w-full touch-none select-none items-center my-7 h-10",
-            className
+            className,
           )}
           {...props}
         >
@@ -99,7 +97,7 @@ export const Slider = React.forwardRef<
         )}
       </div>
     );
-  }
+  },
 );
 
 Slider.displayName = SliderPrimitive.Root.displayName;
