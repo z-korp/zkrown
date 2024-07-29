@@ -121,8 +121,6 @@ const ActionPanel = () => {
       sourceArmy = sourceArmy + armySelected;
     }
 
-    console.log("sourceArmy", sourceArmy);
-    console.log("sourceTile", sourceTile);
     Tile.addOverride(ovIdSource, {
       entity: sourceEntity,
       value: {

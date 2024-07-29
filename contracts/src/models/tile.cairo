@@ -468,7 +468,7 @@ mod tests {
     }
 
     fn setup() -> Setup {
-        Setup { config: Config::Complete }
+        Setup { config: Config::Test }
     }
 
     #[test]
@@ -628,7 +628,7 @@ mod tests {
     }
 
     #[test]
-    #[available_gas(1_200_000)]
+    #[available_gas(1_200_0000)]
     fn test_tile_attack_and_defend_lose() {
         let setup = setup();
         let mut battles: Array<Battle> = array![];
@@ -639,14 +639,14 @@ mod tests {
         assert(attacker.army == 10, 'Tile: wrong attacker army');
         assert(defender.army == 2, 'Tile: wrong defender army');
         assert(defender.owner == PLAYER_2, 'Tile: wrong defender owner');
-        attacker.attack(3, ref defender, 'ATTACK', setup.config);
+        attacker.attack(3, ref defender, setup.config);
         assert(attacker.to == defender.id, 'Tile: wrong attacker to');
         assert(defender.from == attacker.id, 'Tile: wrong defender from');
-        let defeated = defender.defend(ref attacker, SEED, 'DEFEND', ref battles, setup.config);
+        let defeated = defender.defend(ref attacker, SEED, ref battles, setup.config);
         assert(attacker.to == 0, 'Tile: wrong attacker to');
         assert(attacker.army == 7, 'Tile: wrong attacker army');
         assert(defender.from == 0, 'Tile: wrong defender from');
-        assert(defender.army == 2, 'Tile: wrong defender army');
+        assert(defender.army == 3, 'Tile: wrong defender army');
         assert(defender.owner == PLAYER_2, 'Tile: wrong defender owner');
         assert(!defeated, 'Tile: wrong defender defeated');
     }
@@ -663,10 +663,10 @@ mod tests {
         assert(attacker.army == 10, 'Tile: wrong attacker army');
         assert(defender.army == 2, 'Tile: wrong defender army');
         assert(defender.owner == PLAYER_2, 'Tile: wrong defender owner');
-        attacker.attack(9, ref defender, 'ATTACK', setup.config);
+        attacker.attack(9, ref defender, setup.config);
         assert(attacker.to == defender.id, 'Tile: wrong attacker to');
         assert(defender.from == attacker.id, 'Tile: wrong defender from');
-        let defeated = defender.defend(ref attacker, SEED, 'DEFEND', ref battles, setup.config);
+        let defeated = defender.defend(ref attacker, SEED, ref battles, setup.config);
         assert(attacker.to == 0, 'Tile: wrong attacker to');
         assert(attacker.army == 1, 'Tile: wrong attacker army');
         assert(defender.from == 0, 'Tile: wrong defender from');
@@ -685,7 +685,7 @@ mod tests {
         let mut neighbors = setup.config.neighbors(attacker.id).expect('Tile: invalid id');
         let neighbor = neighbors.pop_front().expect('Tile: no neighbors');
         let mut defender = TileTrait::new(GAME_ID, *neighbor, 2, PLAYER_2, setup.config);
-        attacker.attack(3, ref defender, 'ATTACK', setup.config);
+        attacker.attack(3, ref defender, setup.config);
     }
 
     #[test]
@@ -696,7 +696,7 @@ mod tests {
         let invalid_id = setup.config.tile_number().try_into().unwrap() + 1;
         let mut attacker = TileTrait::new(GAME_ID, 1, 4, PLAYER_1, setup.config);
         let mut defender = TileTrait::new(GAME_ID, invalid_id, 2, PLAYER_2, setup.config);
-        attacker.attack(3, ref defender, 'ATTACK', setup.config);
+        attacker.attack(3, ref defender, setup.config);
     }
 
     #[test]
@@ -705,30 +705,7 @@ mod tests {
     fn test_tile_attack_invalid_id() {
         let setup = setup();
         let mut attacker = TileTrait::new(GAME_ID, 1, 4, PLAYER_1, setup.config);
-        attacker.attack(3, ref attacker, 'ATTACK', setup.config);
-    }
-
-    #[test]
-    #[available_gas(1_000_000)]
-    #[should_panic(expected: ('Tile: invalid order status',))]
-    fn test_tile_attack_invalid_order() {
-        let setup = setup();
-        let mut defender = TileTrait::new(GAME_ID, 1, 4, PLAYER_1, setup.config);
-        let mut neighbors = setup.config.neighbors(defender.id).expect('Tile: invalid id');
-        let neighbor = neighbors.pop_front().expect('Tile: no neighbors');
-        let mut attacker = TileTrait::new(GAME_ID, *neighbor, 2, PLAYER_2, setup.config);
-        let mut allies = setup.config.neighbors(attacker.id).expect('Tile: invalid id');
-        let index = loop {
-            match allies.pop_front() {
-                Option::Some(index) => { if index != @defender.id {
-                    break index;
-                }; },
-                Option::None => { panic(array!['Tile: ally not found']); },
-            };
-        };
-        let mut ally = TileTrait::new(GAME_ID, *index, 2, PLAYER_1, setup.config);
-        attacker.attack(1, ref defender, 'ATTACK', setup.config);
-        attacker.attack(1, ref ally, 'ATTACK', setup.config);
+        attacker.attack(3, ref attacker, setup.config);
     }
 
     #[test]
@@ -740,7 +717,7 @@ mod tests {
         let mut neighbors = setup.config.neighbors(attacker.id).expect('Tile: invalid id');
         let neighbor = neighbors.pop_front().expect('Tile: no neighbors');
         let mut defender = TileTrait::new(GAME_ID, *neighbor, 2, PLAYER_1, setup.config);
-        attacker.attack(3, ref defender, 'ATTACK', setup.config);
+        attacker.attack(3, ref defender, setup.config);
     }
 
     #[test]
@@ -752,7 +729,7 @@ mod tests {
         let mut neighbors = setup.config.neighbors(attacker.id).expect('Tile: invalid id');
         let neighbor = neighbors.pop_front().expect('Tile: no neighbors');
         let mut defender = TileTrait::new(GAME_ID, *neighbor, 2, PLAYER_2, setup.config);
-        attacker.attack(4, ref defender, 'ATTACK', setup.config);
+        attacker.attack(4, ref defender, setup.config);
     }
 
     #[test]
@@ -764,7 +741,7 @@ mod tests {
         let mut neighbors = setup.config.neighbors(attacker.id).expect('Tile: invalid id');
         let neighbor = neighbors.pop_front().expect('Tile: no neighbors');
         let mut defender = TileTrait::new(GAME_ID, *neighbor, 2, PLAYER_2, setup.config);
-        attacker.attack(0, ref defender, 'ATTACK', setup.config);
+        attacker.attack(0, ref defender, setup.config);
     }
 
     #[test]
@@ -776,8 +753,8 @@ mod tests {
         let mut neighbors = setup.config.neighbors(attacker.id).expect('Tile: invalid id');
         let neighbor = neighbors.pop_front().expect('Tile: no neighbors');
         let mut defender = TileTrait::new(GAME_ID, *neighbor, 2, PLAYER_2, setup.config);
-        attacker.attack(2, ref defender, 0, setup.config);
-        attacker.attack(1, ref defender, 0, setup.config);
+        attacker.attack(2, ref defender, setup.config);
+        attacker.attack(1, ref defender, setup.config);
     }
 
     #[test]
@@ -792,8 +769,8 @@ mod tests {
         let mut neighbors = setup.config.neighbors(defender.id).expect('Tile: invalid id');
         let neighbor = neighbors.pop_front().expect('Tile: no neighbors');
         let mut mercenary = TileTrait::new(GAME_ID, *neighbor, 2, PLAYER_1, setup.config);
-        attacker.attack(3, ref defender, 'ATTACK', setup.config);
-        mercenary.attack(1, ref defender, 'ATTACK', setup.config);
+        attacker.attack(3, ref defender, setup.config);
+        mercenary.attack(1, ref defender, setup.config);
     }
 
     #[test]
@@ -817,21 +794,7 @@ mod tests {
             };
         };
         let mut foreigner = TileTrait::new(GAME_ID, *index, 2, PLAYER_2, setup.config);
-        attacker.attack(3, ref foreigner, 'ATTACK', setup.config);
-    }
-
-    #[test]
-    #[available_gas(1_000_000)]
-    #[should_panic(expected: ('Tile: invalid order status',))]
-    fn test_tile_attack_and_defend_invalid_order() {
-        let setup = setup();
-        let mut battles: Array<Battle> = array![];
-        let mut attacker = TileTrait::new(GAME_ID, 1, 4, PLAYER_1, setup.config);
-        let mut neighbors = setup.config.neighbors(attacker.id).expect('Tile: invalid id');
-        let neighbor = neighbors.pop_front().expect('Tile: no neighbors');
-        let mut defender = TileTrait::new(GAME_ID, *neighbor, 2, PLAYER_2, setup.config);
-        attacker.attack(3, ref defender, 'ATTACK', setup.config);
-        defender.defend(ref attacker, SEED, 'ATTACK', ref battles, setup.config);
+        attacker.attack(3, ref foreigner, setup.config);
     }
 
     #[test]
@@ -843,7 +806,7 @@ mod tests {
         let invalid_id = setup.config.tile_number().try_into().unwrap() + 1;
         let mut attacker = TileTrait::new(GAME_ID, invalid_id, 4, PLAYER_1, setup.config);
         let mut defender = TileTrait::new(GAME_ID, 1, 2, PLAYER_1, setup.config);
-        defender.defend(ref attacker, SEED, 'DEFEND', ref battles, setup.config);
+        defender.defend(ref attacker, SEED, ref battles, setup.config);
     }
 
     #[test]
@@ -855,7 +818,7 @@ mod tests {
         let invalid_id = setup.config.tile_number().try_into().unwrap() + 1;
         let mut attacker = TileTrait::new(GAME_ID, 1, 4, PLAYER_1, setup.config);
         let mut defender = TileTrait::new(GAME_ID, invalid_id, 2, PLAYER_1, setup.config);
-        defender.defend(ref attacker, SEED, 'DEFEND', ref battles, setup.config);
+        defender.defend(ref attacker, SEED, ref battles, setup.config);
     }
 
     #[test]
@@ -865,7 +828,7 @@ mod tests {
         let setup = setup();
         let mut battles: Array<Battle> = array![];
         let mut attacker = TileTrait::new(GAME_ID, 2, 4, PLAYER_1, setup.config);
-        attacker.defend(ref attacker, SEED, 'DEFEND', ref battles, setup.config);
+        attacker.defend(ref attacker, SEED, ref battles, setup.config);
     }
 
     #[test]
@@ -878,7 +841,7 @@ mod tests {
         let mut neighbors = setup.config.neighbors(attacker.id).expect('Tile: invalid id');
         let neighbor = neighbors.pop_front().expect('Tile: no neighbors');
         let mut defender = TileTrait::new(GAME_ID, *neighbor, 2, PLAYER_2, setup.config);
-        defender.defend(ref attacker, SEED, 'DEFEND', ref battles, setup.config);
+        defender.defend(ref attacker, SEED, ref battles, setup.config);
     }
 
     #[test]
@@ -891,9 +854,9 @@ mod tests {
         let mut neighbors = setup.config.neighbors(attacker.id).expect('Tile: invalid id');
         let neighbor = neighbors.pop_front().expect('Tile: no neighbors');
         let mut defender = TileTrait::new(GAME_ID, *neighbor, 2, PLAYER_2, setup.config);
-        attacker.attack(3, ref defender, 'ATTACK', setup.config);
+        attacker.attack(3, ref defender, setup.config);
         defender.owner = PLAYER_1;
-        defender.defend(ref attacker, SEED, 'DEFEND', ref battles, setup.config);
+        defender.defend(ref attacker, SEED, ref battles, setup.config);
     }
 
     #[test]
@@ -917,10 +880,10 @@ mod tests {
                 Option::None => { panic(array!['Tile: ally not found']); },
             };
         };
-        attacker.attack(1, ref defender, 'ATTACK', setup.config);
+        attacker.attack(1, ref defender, setup.config);
         attacker.id = *index; // Attacker is now at the foreigner location
         defender.from = attacker.id;
-        defender.defend(ref attacker, SEED, 'DEFEND', ref battles, setup.config);
+        defender.defend(ref attacker, SEED, ref battles, setup.config);
     }
 
     #[test]

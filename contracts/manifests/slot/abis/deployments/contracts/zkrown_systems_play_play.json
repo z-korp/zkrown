@@ -1,0 +1,734 @@
+[
+  {
+    "type": "impl",
+    "name": "DojoResourceProviderImpl",
+    "interface_name": "dojo::world::IDojoResourceProvider"
+  },
+  {
+    "type": "interface",
+    "name": "dojo::world::IDojoResourceProvider",
+    "items": [
+      {
+        "type": "function",
+        "name": "dojo_resource",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "core::felt252"
+          }
+        ],
+        "state_mutability": "view"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "WorldProviderImpl",
+    "interface_name": "dojo::world::IWorldProvider"
+  },
+  {
+    "type": "struct",
+    "name": "dojo::world::IWorldDispatcher",
+    "members": [
+      {
+        "name": "contract_address",
+        "type": "core::starknet::contract_address::ContractAddress"
+      }
+    ]
+  },
+  {
+    "type": "interface",
+    "name": "dojo::world::IWorldProvider",
+    "items": [
+      {
+        "type": "function",
+        "name": "world",
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "dojo::world::IWorldDispatcher"
+          }
+        ],
+        "state_mutability": "view"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "IDojoInitImpl",
+    "interface_name": "zkrown::systems::play::play::IDojoInit"
+  },
+  {
+    "type": "interface",
+    "name": "zkrown::systems::play::play::IDojoInit",
+    "items": [
+      {
+        "type": "function",
+        "name": "dojo_init",
+        "inputs": [
+          {
+            "name": "token_address",
+            "type": "core::starknet::contract_address::ContractAddress"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "Host",
+    "interface_name": "zkrown::systems::play::IHost"
+  },
+  {
+    "type": "interface",
+    "name": "zkrown::systems::play::IHost",
+    "items": [
+      {
+        "type": "function",
+        "name": "create",
+        "inputs": [
+          {
+            "name": "player_name",
+            "type": "core::felt252"
+          },
+          {
+            "name": "price",
+            "type": "core::felt252"
+          },
+          {
+            "name": "penalty",
+            "type": "core::integer::u64"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "core::integer::u32"
+          }
+        ],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "join",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          },
+          {
+            "name": "player_name",
+            "type": "core::felt252"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "leave",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "delete",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "kick",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          },
+          {
+            "name": "index",
+            "type": "core::integer::u32"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "grant",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          },
+          {
+            "name": "index",
+            "type": "core::integer::u32"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "start",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          },
+          {
+            "name": "round_count",
+            "type": "core::integer::u32"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "claim",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "Play",
+    "interface_name": "zkrown::systems::play::IPlay"
+  },
+  {
+    "type": "struct",
+    "name": "stark_vrf::ecvrf::Point",
+    "members": [
+      {
+        "name": "x",
+        "type": "core::felt252"
+      },
+      {
+        "name": "y",
+        "type": "core::felt252"
+      }
+    ]
+  },
+  {
+    "type": "struct",
+    "name": "stark_vrf::ecvrf::Proof",
+    "members": [
+      {
+        "name": "gamma",
+        "type": "stark_vrf::ecvrf::Point"
+      },
+      {
+        "name": "c",
+        "type": "core::felt252"
+      },
+      {
+        "name": "s",
+        "type": "core::felt252"
+      },
+      {
+        "name": "sqrt_ratio_hint",
+        "type": "core::felt252"
+      }
+    ]
+  },
+  {
+    "type": "interface",
+    "name": "zkrown::systems::play::IPlay",
+    "items": [
+      {
+        "type": "function",
+        "name": "emote",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          },
+          {
+            "name": "player_index",
+            "type": "core::integer::u32"
+          },
+          {
+            "name": "emote_index",
+            "type": "core::integer::u8"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "attack",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          },
+          {
+            "name": "attacker_index",
+            "type": "core::integer::u8"
+          },
+          {
+            "name": "defender_index",
+            "type": "core::integer::u8"
+          },
+          {
+            "name": "dispatched",
+            "type": "core::integer::u32"
+          },
+          {
+            "name": "proof",
+            "type": "stark_vrf::ecvrf::Proof"
+          },
+          {
+            "name": "seed",
+            "type": "core::felt252"
+          },
+          {
+            "name": "beta",
+            "type": "core::felt252"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "discard",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          },
+          {
+            "name": "card_one",
+            "type": "core::integer::u8"
+          },
+          {
+            "name": "card_two",
+            "type": "core::integer::u8"
+          },
+          {
+            "name": "card_three",
+            "type": "core::integer::u8"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "finish",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "supply",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          },
+          {
+            "name": "tile_index",
+            "type": "core::integer::u8"
+          },
+          {
+            "name": "supply",
+            "type": "core::integer::u32"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "transfer",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          },
+          {
+            "name": "from_index",
+            "type": "core::integer::u8"
+          },
+          {
+            "name": "to_index",
+            "type": "core::integer::u8"
+          },
+          {
+            "name": "army",
+            "type": "core::integer::u32"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "surrender",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      },
+      {
+        "type": "function",
+        "name": "banish",
+        "inputs": [
+          {
+            "name": "game_id",
+            "type": "core::integer::u32"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      }
+    ]
+  },
+  {
+    "type": "impl",
+    "name": "UpgradableImpl",
+    "interface_name": "dojo::components::upgradeable::IUpgradeable"
+  },
+  {
+    "type": "interface",
+    "name": "dojo::components::upgradeable::IUpgradeable",
+    "items": [
+      {
+        "type": "function",
+        "name": "upgrade",
+        "inputs": [
+          {
+            "name": "new_class_hash",
+            "type": "core::starknet::class_hash::ClassHash"
+          }
+        ],
+        "outputs": [],
+        "state_mutability": "external"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "dojo::components::upgradeable::upgradeable::Upgraded",
+    "kind": "struct",
+    "members": [
+      {
+        "name": "class_hash",
+        "type": "core::starknet::class_hash::ClassHash",
+        "kind": "data"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "dojo::components::upgradeable::upgradeable::Event",
+    "kind": "enum",
+    "variants": [
+      {
+        "name": "Upgraded",
+        "type": "dojo::components::upgradeable::upgradeable::Upgraded",
+        "kind": "nested"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "zkrown::events::Emote",
+    "kind": "struct",
+    "members": [
+      {
+        "name": "game_id",
+        "type": "core::integer::u32",
+        "kind": "key"
+      },
+      {
+        "name": "player_index",
+        "type": "core::integer::u32",
+        "kind": "data"
+      },
+      {
+        "name": "emote_index",
+        "type": "core::integer::u8",
+        "kind": "data"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "zkrown::events::Supply",
+    "kind": "struct",
+    "members": [
+      {
+        "name": "game_id",
+        "type": "core::integer::u32",
+        "kind": "key"
+      },
+      {
+        "name": "player_index",
+        "type": "core::integer::u32",
+        "kind": "key"
+      },
+      {
+        "name": "troops",
+        "type": "core::integer::u32",
+        "kind": "data"
+      },
+      {
+        "name": "region",
+        "type": "core::integer::u8",
+        "kind": "data"
+      }
+    ]
+  },
+  {
+    "type": "enum",
+    "name": "core::bool",
+    "variants": [
+      {
+        "name": "False",
+        "type": "()"
+      },
+      {
+        "name": "True",
+        "type": "()"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "zkrown::events::Defend",
+    "kind": "struct",
+    "members": [
+      {
+        "name": "game_id",
+        "type": "core::integer::u32",
+        "kind": "key"
+      },
+      {
+        "name": "attacker_index",
+        "type": "core::integer::u32",
+        "kind": "key"
+      },
+      {
+        "name": "defender_index",
+        "type": "core::integer::u32",
+        "kind": "key"
+      },
+      {
+        "name": "target_tile",
+        "type": "core::integer::u8",
+        "kind": "data"
+      },
+      {
+        "name": "result",
+        "type": "core::bool",
+        "kind": "data"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "zkrown::events::Fortify",
+    "kind": "struct",
+    "members": [
+      {
+        "name": "game_id",
+        "type": "core::integer::u32",
+        "kind": "key"
+      },
+      {
+        "name": "player_index",
+        "type": "core::integer::u32",
+        "kind": "key"
+      },
+      {
+        "name": "from_tile",
+        "type": "core::integer::u8",
+        "kind": "data"
+      },
+      {
+        "name": "to_tile",
+        "type": "core::integer::u8",
+        "kind": "data"
+      },
+      {
+        "name": "troops",
+        "type": "core::integer::u32",
+        "kind": "data"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "zkrown::events::Battle",
+    "kind": "struct",
+    "members": [
+      {
+        "name": "game_id",
+        "type": "core::integer::u32",
+        "kind": "key"
+      },
+      {
+        "name": "tx_hash",
+        "type": "core::felt252",
+        "kind": "key"
+      },
+      {
+        "name": "battle_id",
+        "type": "core::integer::u32",
+        "kind": "data"
+      },
+      {
+        "name": "duel_id",
+        "type": "core::integer::u32",
+        "kind": "data"
+      },
+      {
+        "name": "attacker_index",
+        "type": "core::integer::u32",
+        "kind": "data"
+      },
+      {
+        "name": "defender_index",
+        "type": "core::integer::u32",
+        "kind": "data"
+      },
+      {
+        "name": "attacker_troops",
+        "type": "core::integer::u32",
+        "kind": "data"
+      },
+      {
+        "name": "defender_troops",
+        "type": "core::integer::u32",
+        "kind": "data"
+      },
+      {
+        "name": "attacker_value",
+        "type": "core::integer::u8",
+        "kind": "data"
+      },
+      {
+        "name": "defender_value",
+        "type": "core::integer::u8",
+        "kind": "data"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "zkrown::components::emitter::EmitterComponent::Event",
+    "kind": "enum",
+    "variants": [
+      {
+        "name": "Emote",
+        "type": "zkrown::events::Emote",
+        "kind": "nested"
+      },
+      {
+        "name": "Supply",
+        "type": "zkrown::events::Supply",
+        "kind": "nested"
+      },
+      {
+        "name": "Defend",
+        "type": "zkrown::events::Defend",
+        "kind": "nested"
+      },
+      {
+        "name": "Fortify",
+        "type": "zkrown::events::Fortify",
+        "kind": "nested"
+      },
+      {
+        "name": "Battle",
+        "type": "zkrown::events::Battle",
+        "kind": "nested"
+      }
+    ]
+  },
+  {
+    "type": "event",
+    "name": "zkrown::components::hostable::HostableComponent::Event",
+    "kind": "enum",
+    "variants": []
+  },
+  {
+    "type": "event",
+    "name": "zkrown::components::payable::PayableComponent::Event",
+    "kind": "enum",
+    "variants": []
+  },
+  {
+    "type": "event",
+    "name": "zkrown::components::playable::PlayableComponent::Event",
+    "kind": "enum",
+    "variants": []
+  },
+  {
+    "type": "event",
+    "name": "zkrown::systems::play::play::Event",
+    "kind": "enum",
+    "variants": [
+      {
+        "name": "UpgradeableEvent",
+        "type": "dojo::components::upgradeable::upgradeable::Event",
+        "kind": "nested"
+      },
+      {
+        "name": "EmitterEvent",
+        "type": "zkrown::components::emitter::EmitterComponent::Event",
+        "kind": "flat"
+      },
+      {
+        "name": "HostableEvent",
+        "type": "zkrown::components::hostable::HostableComponent::Event",
+        "kind": "flat"
+      },
+      {
+        "name": "PayableEvent",
+        "type": "zkrown::components::payable::PayableComponent::Event",
+        "kind": "flat"
+      },
+      {
+        "name": "PlayableEvent",
+        "type": "zkrown::components::playable::PlayableComponent::Event",
+        "kind": "flat"
+      }
+    ]
+  }
+]

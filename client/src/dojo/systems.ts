@@ -102,7 +102,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.create({ account, ...props }),
-      "Game has been created.",
+      "New game successfully created.",
     );
   };
 
@@ -110,7 +110,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.join({ account, ...props }),
-      "Game has been joined.",
+      "You've successfully joined the game.",
     );
   };
 
@@ -118,7 +118,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.promote({ account, ...props }),
-      "Host role has been promoted.",
+      "Player successfully promoted to host.",
     );
   };
 
@@ -126,7 +126,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.leave({ account, ...props }),
-      "Game has been left.",
+      "You've left the game successfully.",
     );
   };
 
@@ -134,7 +134,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.kick({ account, ...props }),
-      "Game has been left.",
+      "Player has been kicked from the game.",
     );
   };
 
@@ -142,7 +142,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.remove({ account, ...props }),
-      "Game has been deleted.",
+      "Game has been successfully deleted.",
     );
   };
 
@@ -150,7 +150,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.start({ account, ...props }),
-      "Game has started.",
+      "The game has officially begun!",
     );
   };
 
@@ -158,7 +158,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.claim({ account, ...props }),
-      "Game has been claimed.",
+      "Token successfully claimed.",
     );
   };
 
@@ -166,7 +166,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.surrender({ account, ...props }),
-      "Player has surrendered.",
+      "You've surrendered the game.",
     );
   };
 
@@ -174,7 +174,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.banish({ account, ...props }),
-      "Player has been banished.",
+      "Player has been banished from the game.",
     );
   };
 
@@ -182,7 +182,7 @@ export function systems({
     return await handleTransaction(
       account,
       () => client.play.attack({ account, ...props }),
-      "Player has attacked.",
+      "Attack successfully executed.",
     );
   };
 
@@ -190,7 +190,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.discard({ account, ...props }),
-      "Player has discarded.",
+      "Cards successfully discarded.",
     );
   };
 
@@ -198,7 +198,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.finish({ account, ...props }),
-      "Game has finished.",
+      "Current phase completed.",
     );
   };
 
@@ -206,7 +206,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.transfer({ account, ...props }),
-      "Player has transferred.",
+      "Resources transferred successfully.",
     );
   };
 
@@ -214,7 +214,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.supply({ account, ...props }),
-      "Player has supplied.",
+      "Supply action completed successfully.",
     );
   };
 
@@ -222,7 +222,7 @@ export function systems({
     await handleTransaction(
       account,
       () => client.play.emote({ account, ...props }),
-      "Player has emoted.",
+      "Emote sent successfully.",
     );
   };
 
@@ -232,8 +232,8 @@ export function systems({
     leave,
     start,
     kick,
-    promote, // grant in contract
-    remove, // delect in contract
+    promote, // "grant" in contract
+    remove, // "delete" in contract
     claim,
     surrender,
     banish,

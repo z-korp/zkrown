@@ -150,6 +150,7 @@ mod PlayableComponent {
             let attacker_troops = attacker.dispatched;
             let mut defender = store.tile(game, defender_index);
             let defender_troops = defender.army;
+            assert(attacker.owner == player.index.into(), errors::ATTACK_INVALID_OWNER);
 
             // [Compute] Attack
             attacker.attack(dispatched, ref defender, game.config.into());

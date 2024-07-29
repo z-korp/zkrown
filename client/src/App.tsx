@@ -41,11 +41,16 @@ function App() {
   const { players } = useGetPlayers();
   const { me } = useMe();
 
-  console.log("gameState", game_state);
   return (
     <>
       <TutorialProvider>
-        <Toaster />
+        <Toaster
+          toastOptions={{
+            classNames: {
+              toast: "bg-stone-600 border-stone-900 border",
+            },
+          }}
+        />
         {battleReport && (
           <OverlayBattleReport
             battle={battleReport}
