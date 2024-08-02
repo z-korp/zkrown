@@ -27,13 +27,13 @@ const SoundsDialog = () => {
             </DialogTrigger>
           </TooltipTrigger>
           <TooltipContent className="px-2 py-0 font-vt323">
-            Sounds settings
+            Sound settings
           </TooltipContent>
         </Tooltip>
         <DialogContent className="sm:max-w-md bg-stone-700 border-2 border-black">
           <DialogHeader>
             <DialogTitle className="text-white text-3xl text-center">
-              Sounds Settings
+              Sound Settings
             </DialogTitle>
           </DialogHeader>
 

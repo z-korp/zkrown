@@ -16,6 +16,7 @@ import WalletButton from "../WalletButton";
 import SurrenderDialog from "../SurrenderDialog";
 import TutorialButton from "../TutorialButton";
 import MapButton from "../MapButton";
+import FeedbackButton from "../FeedbackButton";
 
 const Map = () => {
   const containerRef = useRef(null);
@@ -107,7 +108,7 @@ const Map = () => {
           <SurrenderDialog />
           <TutorialButton />
           <SoundsDialog />
-
+          <FeedbackButton />
           <WalletButton />
         </div>
         {isContinentMode && (
